@@ -1,0 +1,613 @@
+# People named on the site. Each entry feeds the `person` shortcode
+# ({{ person(id="argamon") }}) and the publication author lists: the name
+# becomes a link to the profile, opened in a new tab, with the bio in a
+# hover card.
+#
+# name:    as it should appear in the card (the page may show a shorter form).
+# bio:     one or two sentences in our words, from the person's public profile.
+#          Present tense only where the role is current as of `checked`.
+# url:     LinkedIn where they have one, else their professional home page.
+# link:    the label shown at the foot of the card for where the link goes.
+# checked: the date the url and bio were last looked at.
+# photo_source: where static/images/people/<id>.jpg was taken from, if there is one.
+
+[swortzel]
+name = "Tim Swortzel"
+bio = "Cybersecurity architect at Oracle, working on security operations, automation, and AI-assisted security platforms. A colleague from the Nortel network management field work."
+url = "https://www.linkedin.com/in/tim-swortzel-3897098/"
+link = "LinkedIn"
+checked = "2026-10-08"
+
+[ujfalusi]
+name = "Joseph Ujfalusi"
+bio = "A colleague from the Nortel network management field work."
+url = "https://www.linkedin.com/in/joseph-ujfalusi-7058b1/"
+link = "LinkedIn"
+checked = "2026-10-08"
+
+[argamon]
+name = "Shlomo Argamon"
+bio = "Computational linguist. Associate Provost for AI and dean of the Graduate School of Technology at Touro University; before that professor of computer science at Illinois Tech, where he led ADAMA."
+url = "https://www.linkedin.com/in/shlomoengelsonargamon/"
+link = "LinkedIn"
+checked = "2026-10-08"
+photo_source = "https://ai.touro.edu/about/engelson-argamon-shlomo.php"
+
+[birnbaum]
+name = "Larry Birnbaum"
+bio = "Professor of computer science at Northwestern and co-director of its Intelligent Information Laboratory. Co-founded Narrative Science and was its chief scientific adviser."
+url = "https://www.linkedin.com/in/larry-birnbaum-1393b4147/"
+link = "LinkedIn"
+checked = "2026-10-08"
+photo_source = "https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/birnbaum-larry.html"
+
+[hammond]
+name = "Kristian Hammond"
+bio = "Bill and Cathy Osborn Professor of Computer Science at Northwestern and director of its Center for Advancing Safety of Machine Intelligence. Co-founded Narrative Science and was its chief scientist."
+url = "https://www.linkedin.com/in/kristianhammond/"
+link = "LinkedIn"
+checked = "2026-10-08"
+photo_source = "https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/hammond-kristian.html"
+
+[westneat]
+name = "Mark Westneat"
+bio = "Professor of organismal biology and anatomy at the University of Chicago, working on the evolution and biomechanics of fishes. Formerly chair of zoology and director of the Biodiversity Synthesis Center at the Field Museum."
+url = "https://www.linkedin.com/in/mark-westneat-02910a10/"
+link = "LinkedIn"
+checked = "2026-10-08"
+photo_source = "https://biologicalsciences.uchicago.edu/faculty/mark-westneat-phd"
+
+[cleland-huang]
+name = "Jane Cleland-Huang"
+bio = "Frank M. Freimann Professor and chair of computer science and engineering at Notre Dame, where she directs the Software and Requirements Engineering Research Lab. Ran DePaul's Center for Applied Requirements Engineering before moving to Notre Dame in 2016."
+url = "https://www.linkedin.com/in/jane-cleland-huang-2786224/"
+link = "LinkedIn"
+checked = "2026-10-08"
+photo_source = "https://cse.nd.edu/faculty/jane-cleland-huang/"
+
+[duan]
+name = "Chuan Duan"
+bio = "Engineer at Walleye Capital, with a PhD and a CFA. At DePaul he did doctoral research on automated requirements traceability with Jane Cleland-Huang, including the Poirot tool."
+url = "https://www.linkedin.com/in/chuan-duan-a814b28/"
+link = "LinkedIn"
+checked = "2026-10-08"
+
+[antos]
+name = "Monika Antos"
+bio = "Manages the enterprise applications portfolio at Uber. Worked at DePaul's Center for Applied Requirements Engineering."
+url = "https://www.linkedin.com/in/antos/"
+link = "LinkedIn"
+checked = "2026-10-08"
+
+[angulo]
+name = "David Sigfredo Angulo"
+bio = "Grid-computing researcher who ran the Illinois Bio-Grid and taught computer science at DePaul; earlier on the Globus work at the University of Chicago, later a data architect in industry."
+url = "https://www.linkedin.com/in/daveangulo/"
+link = "LinkedIn"
+checked = "2026-10-08"
+
+[phillips]
+name = "Joseph Phillips"
+bio = "Computer scientist at DePaul University working on computational scientific discovery: algorithms and systems that help scientists understand, compute with, and extend scientific models. Ph.D. in AI from Michigan; earlier a chemist and a programmer at Lawrence Livermore."
+url = "https://www.depaul.edu/faculty/joseph-phillips"
+link = "DePaul faculty page"
+checked = "2026-10-13"
+photo_source = "https://www.depaul.edu/faculty/joseph-phillips"
+
+[ortony]
+name = "Andrew Ortony"
+bio = "Professor emeritus at Northwestern, a psychologist known for his work on metaphor and for the OCC model of emotion, set out in The Cognitive Structure of Emotions."
+url = "https://www.linkedin.com/in/andrew-ortony-a2035ba/"
+link = "LinkedIn"
+checked = "2026-10-08"
+
+[minsky]
+name = "Marvin Minsky"
+bio = "Co-founder of MIT's artificial intelligence laboratory and a Turing Award winner; one of the founders of AI as a field. Died in 2016."
+url = "https://en.wikipedia.org/wiki/Marvin_Minsky"
+link = "Wikipedia"
+checked = "2026-10-08"
+photo_source = "https://commons.wikimedia.org/wiki/File:Marvin_Minsky_at_OLPCb_(3x4_cropped).jpg"
+
+[owsley]
+name = "Sara Owsley Sood"
+bio = "Chookaszian Family Teaching Professor of computer science at Northwestern and founding director of its undergraduate AI major. Her research is on emotion and sentiment in online communication."
+url = "https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/sood-owsley-sara.html"
+link = "Northwestern"
+checked = "2026-10-08"
+photo_source = "https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/sood-owsley-sara.html"
+
+[vargo]
+name = "Chris J. Vargo"
+bio = "Associate professor of advertising and analytics at the University of Colorado Boulder, applying computational methods to social media data. CEO of Socialcontext and editor of The Agenda Setting Journal."
+url = "https://www.linkedin.com/in/chrisjvargo/"
+link = "LinkedIn"
+checked = "2026-10-08"
+photo_source = "https://www.colorado.edu/business/leeds-directory/faculty/chris-vargo"
+
+[hopp]
+name = "Tobias Hopp"
+bio = "Associate professor of advertising at the University of Colorado Boulder and associate dean of graduate programs, studying digital media use and uncivil online communication."
+url = "https://www.linkedin.com/in/toby-hopp-a63483162/"
+link = "LinkedIn"
+checked = "2026-10-08"
+photo_source = "https://www.colorado.edu/cmci/people/college-leadership/toby-hopp"
+
+[nishal]
+name = "Sachita Nishal"
+bio = "Designs sociotechnical systems that help people make sense of online information, including AI tools for science journalists. PhD from Northwestern; joining the University of Washington's Center for an Informed Public as a postdoc in 2026."
+url = "https://www.linkedin.com/in/sachitanishal/"
+link = "LinkedIn"
+checked = "2026-10-08"
+
+[horvat]
+name = "Ágnes Horvát"
+bio = "Associate professor of communication studies and computer science at Northwestern, directing the Lab on Innovation, Networks, and Knowledge. A physicist turned computational social scientist."
+url = "https://www.linkedin.com/in/agnes-horvat-ba789620b/"
+link = "LinkedIn"
+checked = "2026-10-08"
+photo_source = "https://communication.northwestern.edu/faculty/%C3%A1gnes-horv%C3%A1t.html"
+
+[diakopoulos]
+name = "Nicholas Diakopoulos"
+bio = "Professor of communication studies and computer science at Northwestern, where he directs the Computational Journalism Lab. Author of Automating the News."
+url = "https://www.linkedin.com/in/nicholas-diakopoulos-83848114/"
+link = "LinkedIn"
+checked = "2026-10-08"
+photo_source = "https://communication.northwestern.edu/faculty/nicholas-diakopoulos.html"
+
+[germuska]
+name = "Joe Germuska"
+bio = "Executive director of Northwestern's Knight Lab. A founding member of the Chicago Tribune news apps team and the creator of Census Reporter."
+url = "https://www.linkedin.com/in/joegermuska/"
+link = "LinkedIn"
+checked = "2026-10-08"
+photo_source = "https://knightlab.northwestern.edu/people/joe-germuska/"
+
+[zhu]
+name = "Katie Zhu"
+bio = "Built the first Slimformation as a Knight Lab undergraduate fellow in journalism and computer science; went on to engineering at The New York Times and Twitter."
+url = "https://www.linkedin.com/in/ktzhu/"
+link = "LinkedIn"
+checked = "2026-10-08"
+
+[andrew]
+name = "Liam Andrew"
+bio = "Technology lead in the American Journalism Project's Product & AI Studio, helping nonprofit newsrooms with technology and AI. Formerly led product at The Texas Tribune; a Nieman Lab Google Journalism Fellow and MIT Comparative Media Studies graduate."
+url = "https://www.linkedin.com/in/liamandrew/"
+link = "LinkedIn"
+checked = "2026-10-08"
+photo_source = "https://www.theajp.org/about/our-team/liam-andrew/"
+
+[calagna]
+name = "Kelly Calagna"
+bio = "Managed the research and development of SensorGrid as a Knight Lab fellow. Master's from Medill, where she was a Comer Climate Science Scholar and received the 2018 Harrington Award in Interactive Storytelling."
+url = "https://www.linkedin.com/in/kelly-calagna-8aa8bba2/"
+link = "LinkedIn"
+checked = "2026-10-08"
+photo_source = "https://knightlab.northwestern.edu/people/kelly-calagna/"
+
+[friedman]
+name = "Jordan Friedman"
+bio = "Knight Lab student fellow at Northwestern, 2016 to 2018, in the lab's Device Lab and on virtual reality projects."
+url = "https://www.linkedin.com/in/jordan-e-friedman/"
+link = "LinkedIn"
+checked = "2026-10-27"
+photo_source = "https://knightlab.northwestern.edu/people/jordan-friedman/"
+
+[kash]
+name = "Mike Kash"
+bio = "Senior 3D artist with twenty years in advertising, film, and games; a VES Award winner for visual effects in a commercial."
+url = "https://www.linkedin.com/in/mikekash/"
+link = "LinkedIn"
+checked = "2026-10-08"
+
+[kanareykin]
+name = "Sergey Kanareykin"
+bio = "Technologist and entrepreneur at Euclid Techlabs, building medical and electron-beam devices. Worked on ADAMA through the Brain Sciences Foundation and co-authored its metaphor identification papers."
+url = "https://www.linkedin.com/in/kanareykin/"
+link = "LinkedIn"
+checked = "2026-10-08"
+
+[taylor]
+name = "Matthew Taylor"
+bio = "Software engineer and facilitator in learning technology, at i2 Learning. Worked on ADAMA's affect classification software from 2012 to 2014."
+url = "https://www.linkedin.com/in/matthew-taylor-03694642/"
+link = "LinkedIn"
+checked = "2026-10-08"
+
+[rasooli]
+name = "Amin Rasooli"
+bio = "Researcher in Argamon's group at Illinois Tech; co-author of work on profile-based authorship analysis."
+url = "https://www.linkedin.com/in/amiraso/"
+link = "LinkedIn"
+checked = "2026-10-08"
+
+[gandy]
+name = "Lisa Gandy"
+bio = "Associate professor of computer science at Kettering University, formerly at Central Michigan. Her research applies natural language processing to social media and text analysis. PhD from Northwestern."
+url = "https://www.linkedin.com/in/lisa-gandy-59b59713/"
+link = "LinkedIn"
+checked = "2026-10-08"
+
+[obanion]
+name = "Shawn O'Banion"
+bio = "Senior software engineering manager at Google, working on large-scale machine learning. PhD in computer science from Northwestern, where he built The Local Angle at the InfoLab."
+url = "https://www.linkedin.com/in/shawnobanion/"
+link = "LinkedIn"
+checked = "2026-10-08"
+photo_source = "https://shawnobanion-blog.tumblr.com/"
+
+[boon]
+name = "Miriam Boon"
+bio = "Science journalist turned researcher. Did doctoral work in Technology and Social Behavior at Northwestern, building journalism prototypes at the InfoLab; now at the University of Regina."
+url = "https://www.linkedin.com/in/miriam-boon-705a78a/"
+link = "LinkedIn"
+checked = "2026-10-08"
+photo_source = "http://www.miriamboon.com/"
+
+[wilson]
+name = "Jennifer Wilson"
+bio = "Developer at Northwestern's Intelligent Information Laboratory and the Knight Lab, with a background in software startups; now at Test Innovators. Bachelor's in economics and MMSS from Northwestern, M.S. in computer science from DePaul."
+url = "https://www.linkedin.com/in/jywsn/"
+link = "LinkedIn"
+checked = "2026-10-15"
+photo_source = "https://web.archive.org/web/20160329073853/http://infolab.northwestern.edu/team.html"
+
+[wise]
+name = "Zach Wise"
+bio = "Emmy-winning interactive producer, associate professor at Northwestern's Medill school and a Knight Lab faculty lead; formerly of The New York Times. Creator of TimelineJS and StoryMapJS."
+url = "https://www.linkedin.com/in/zachwise/"
+link = "LinkedIn"
+checked = "2026-10-15"
+photo_source = "https://knightlab.northwestern.edu/people/zach-wise/"
+
+[reinhardt]
+name = "Will Reinhardt"
+bio = "Northwestern student on the Privacy Mirror team in the Knight Lab Studio, winter 2019."
+url = "https://www.linkedin.com/in/william-reinhardt-009279136/"
+link = "LinkedIn"
+checked = "2026-10-15"
+
+[wong]
+name = "Sarah Wong"
+bio = "Northwestern computer science, class of 2019; on the Privacy Mirror team in the Knight Lab Studio."
+url = "https://www.linkedin.com/in/sarah-wong-610034114/"
+link = "LinkedIn"
+checked = "2026-10-15"
+
+[bergstrom]
+name = "Brett Bergstrom"
+bio = "Medill master's candidate in media innovation and entrepreneurship at the time; product-focused researcher and creative writer. On the Creative Co-author team in the Knight Lab Studio, spring 2018."
+url = "https://studio.knightlab.com/people/brett-bergstrom/"
+link = "Knight Lab Studio"
+checked = "2026-10-15"
+
+[birori]
+name = "Jeff Birori"
+bio = "Knight Lab Device Lab fellow; on the Creative Co-author team in the Knight Lab Studio, spring 2018."
+url = "https://studio.knightlab.com/people/jeff-birori/"
+link = "Knight Lab Studio"
+checked = "2026-10-15"
+
+[dwyer]
+name = "Lucy Dwyer"
+bio = "Northwestern undergraduate in journalism, integrated marketing communications, and sociology at the time; on the Creative Co-author team in the Knight Lab Studio, spring 2018."
+url = "https://studio.knightlab.com/people/lucy-dwyer/"
+link = "Knight Lab Studio"
+checked = "2026-10-15"
+
+[osnos]
+name = "Corinne Osnos"
+bio = "Vice president of subscriptions and marketing at Foreign Policy; earlier senior manager of audience strategy for New York magazine's digital brands. Medill master's in media innovation; on the Creative Co-author team in the Knight Lab Studio, spring 2018."
+url = "https://foreignpolicy.com/author/corinne-osnos-fp/"
+link = "Foreign Policy"
+checked = "2026-10-15"
+
+[xie]
+name = "Yani Xie"
+bio = "Northwestern computer science, class of 2018; on the Creative Co-author team in the Knight Lab Studio, spring 2018."
+url = "https://studio.knightlab.com/people/yani-xie/"
+link = "Knight Lab Studio"
+checked = "2026-10-15"
+
+[silver]
+name = "Michael A. Silver"
+bio = "The Knight Lab's first executive director, 2011 to 2012, after more than twenty-five years at the Tribune Company building interactive information services."
+url = "https://knightlab.northwestern.edu/people/mike-silver/"
+link = "Knight Lab"
+checked = "2026-10-15"
+
+[gilbert]
+name = "Jeremy Gilbert"
+bio = "Knight Chair in Digital Media Strategy at Northwestern's Medill school, where he oversees the Knight Lab. Formerly director of strategic initiatives at The Washington Post, and before that National Geographic and Poynter."
+url = "https://www.linkedin.com/in/JeremyDGilbert/"
+link = "LinkedIn"
+checked = "2026-10-15"
+photo_source = "https://knightlab.northwestern.edu/people/jeremy-gilbert/"
+
+[wezerek]
+name = "Gus Wezerek"
+bio = "Visual journalist, formerly of FiveThirtyEight. A Medill senior on the NATO in Chicago team in 2012, with internships at the Boston Globe and Wired behind him."
+url = "https://fivethirtyeight.com/contributors/gus-wezerek/"
+link = "FiveThirtyEight"
+checked = "2026-10-15"
+
+[adler]
+name = "Sarah Adler"
+bio = "Co-founder and chief technology officer of Spoon University, later entrepreneur in residence at The New York Times. A Medill junior on the NATO in Chicago team in 2012."
+url = "https://www.northwestern.edu/magazine/fall2015/feature/spoon-u-mackenzie-barth-sarah-adler.html"
+link = "Northwestern Magazine"
+checked = "2026-10-15"
+
+[hill]
+name = "Dan Hill"
+bio = "Northwestern journalism and computer science graduate who interned at The Wall Street Journal, The Washington Post, and The Sacramento Bee. A Medill junior on the NATO in Chicago team in 2012."
+url = "https://aaja2013.sched.com/speaker/dan_hill.1qxs5l2q"
+link = "Profile"
+checked = "2026-10-15"
+
+[lee]
+name = "Cary Lee"
+bio = "Engineering leader; Northwestern dual degree in computer science and vocal performance, 2012, then a software design engineer at Microsoft. On the NATO in Chicago team as a graduating senior."
+url = "https://linkedin.com/in/carylee"
+link = "LinkedIn"
+checked = "2026-10-15"
+
+[billings]
+name = "Heather Billings"
+bio = "Designer and developer at Northwestern's Knight Lab from 2014 to 2016."
+url = "https://knightlab.northwestern.edu/people/heather-billings/"
+link = "Knight Lab"
+checked = "2026-10-15"
+photo_source = "https://knightlab.northwestern.edu/people/heather-billings/"
+
+[mcclendon]
+name = "Bomani McClendon"
+bio = "Student fellow at Northwestern's Knight Lab; now an engineer in New York."
+url = "https://knightlab.northwestern.edu/people/bomani-mcclendon/"
+link = "Knight Lab"
+checked = "2026-10-15"
+photo_source = "https://knightlab.northwestern.edu/people/bomani-mcclendon/"
+
+[martinez]
+name = "Michael Martinez"
+bio = "Student fellow at Northwestern's Knight Lab."
+url = "https://knightlab.northwestern.edu/people/michael-martinez/"
+link = "Knight Lab"
+checked = "2026-10-15"
+photo_source = "https://knightlab.northwestern.edu/people/michael-martinez/"
+
+[din]
+name = "Benjamin Din"
+bio = "Student fellow at Northwestern's Knight Lab."
+url = "https://knightlab.northwestern.edu/people/benjamin-din/"
+link = "Knight Lab"
+checked = "2026-10-15"
+photo_source = "https://knightlab.northwestern.edu/people/benjamin-din/"
+
+[cohn]
+name = "Jason Cohn"
+bio = "Doctoral candidate in computer science at Northwestern's InfoLab, applying natural language processing to social and news media; co-author of AttitudeBuzz."
+url = "https://scholar.google.com/citations?user=KxtsXu8AAAAJ"
+link = "Google Scholar"
+checked = "2026-10-15"
+photo_source = "https://web.archive.org/web/20160329073853/http://infolab.northwestern.edu/team.html"
+
+[kuntz]
+name = "Alex Kuntz"
+bio = "Doctoral student in computer science at Northwestern's InfoLab, in artificial intelligence, machine learning, and natural language processing; co-author of AttitudeBuzz. Carleton College, 2009."
+url = "https://www.linkedin.com/in/alex-kuntz-09/"
+link = "LinkedIn"
+checked = "2026-10-15"
+photo_source = "https://web.archive.org/web/20160329073853/http://infolab.northwestern.edu/team.html"
+
+[shaw]
+name = "Adam Shaw"
+bio = "Developer and founder of FullCalendar, the open-source JavaScript calendar toolkit. B.S. in computer science and film from Northwestern, where he did research at the InfoLab."
+url = "https://arshaw.dev/about"
+link = "Personal site"
+checked = "2026-10-15"
+photo_source = "https://arshaw.dev/about"
+
+[wagner]
+name = "Earl J. Wagner"
+bio = "Head of technology at Paths in Chicago, formerly a senior software engineer at Google. PhD in computer science from Northwestern, 2009, advised by Larry Birnbaum."
+url = "https://www.linkedin.com/in/earljwagner/"
+link = "LinkedIn"
+checked = "2026-10-15"
+photo_source = "https://integraleuropeanconference.com/presenter/wagner-earl/"
+
+[iacobelli]
+name = "Francisco Iacobelli"
+bio = "Associate professor of health informatics and data science at Loyola University Chicago, working on AI and interfaces for low-literacy and Latino communities in healthcare; formerly taught computer science at Northeastern Illinois University. PhD from Northwestern's InfoLab, 2011."
+url = "https://www.luc.edu/parkinson/ourpeople/facultystaffprofiles/franciscoiacobelli.shtml"
+link = "Faculty page"
+checked = "2026-10-15"
+photo_source = "https://www.luc.edu/parkinson/ourpeople/facultystaffprofiles/franciscoiacobelli.shtml"
+
+[liu]
+name = "Jiahui Liu"
+bio = "PhD in computer science from Northwestern's InfoLab, 2009, advised by Larry Birnbaum, with research on Spectrum, LocalSavvy, and Compare & Contrast; went to Google after the PhD. B.E. from Zhejiang University."
+url = "https://users.cs.northwestern.edu/~jli156"
+link = "Northwestern page"
+checked = "2026-10-15"
+photo_source = "https://users.cs.northwestern.edu/~jli156"
+
+[templon]
+name = "John R. Templon"
+bio = "Staff engineer at GameChanger in New York. Before that, an investigative data journalist and data editor at BuzzFeed News, and one of the first employees of Narrative Science, the startup that came out of the InfoLab. M.S.J. from Northwestern's Medill, 2009."
+url = "https://www.johntemplon.com/"
+link = "Personal site"
+checked = "2026-10-15"
+photo_source = "https://www.buzzfeed.com/johntemplon"
+
+[nichols]
+name = "Nate Nichols"
+bio = "VP of product management and head of generative AI at Tableau, Salesforce; previously chief scientist at Narrative Science, with more than forty patents on text generation. PhD in artificial intelligence from Northwestern, 2010."
+url = "https://www.salesforce.com/blog/author/dr-nate-nichols/"
+link = "Salesforce"
+checked = "2026-10-15"
+photo_source = "https://www.salesforce.com/blog/author/dr-nate-nichols/"
+
+[ssood]
+name = "Sanjay Sood"
+bio = "Senior vice president and chief digital and technology officer at AAR; previously CTO of CDW and an engineering leader at HERE Technologies. PhD in computer science from Northwestern, 2007, under Kristian Hammond and Larry Birnbaum."
+url = "https://www.aarcorp.com/en/about/corporate-officers/sanjay-sood/"
+link = "AAR"
+checked = "2026-10-15"
+photo_source = "https://www.aarcorp.com/en/about/corporate-officers/sanjay-sood/"
+
+[mcnally]
+name = "Patrick McNally"
+bio = "Chief product officer at InvestiFi; earlier head of product at Guidebook and a senior product manager at Elastic. PhD in computer science from Northwestern's InfoLab, 2013, where he co-developed Manatee; B.A. from Pomona College."
+url = "https://www.linkedin.com/in/patrick-mcnally-645471a1/"
+link = "LinkedIn"
+checked = "2026-10-15"
+
+[allen]
+name = "Nick Allen"
+bio = "Lead author of StatsMonkey, the data-driven sports story writer built at the InfoLab that became Narrative Science, where he then worked. M.S.J. from Northwestern's Medill, 2009, as one of its programmer-journalist scholars; B.S. in computer science from Oregon State. Now in Portland."
+url = "https://github.com/NicholasDAllen"
+link = "GitHub"
+checked = "2026-10-15"
+photo_source = "https://github.com/NicholasDAllen"
+
+[smathers]
+name = "Mike Smathers"
+bio = "Software developer in Chicago, at Narrative Science after the lab; on the InfoLab staff on Listening Post."
+url = "https://github.com/msmathers"
+link = "GitHub"
+checked = "2026-10-15"
+photo_source = "https://github.com/msmathers"
+
+[hsmith]
+name = "Heather Smith"
+bio = "Spatial artist and creative director working in augmented, virtual, and mixed reality, now as Heather Dunaway Smith; earlier an animator and designer on the InfoLab staff on News at Seven. B.A. in interactive multimedia from Columbia College Chicago."
+url = "https://www.dunawaysmith.com"
+link = "Personal site"
+checked = "2026-10-15"
+photo_source = "https://www.clockworkbird.com/pages/about.html"
+
+[thompson]
+name = "Akira Thompson"
+bio = "Studio head and game director at RainBros in Osaka, previously creative director at Universal Studios Japan and a Disney Imagineer; a character designer on News at Seven in 2007 and 2008. B.A. from Columbia College Chicago, M.S. from UC Santa Cruz."
+url = "https://www.linkedin.com/in/akiraithompson/"
+link = "LinkedIn"
+checked = "2026-10-15"
+photo_source = "https://magazine.ucsc.edu/2016/03/maybe-they-wont-kill-you/"
+
+[singh]
+name = "Gursimran Singh"
+bio = "Software developer in San Francisco; as a Northwestern computer science student, the main contributor to the Slimformation prototype's code."
+url = "https://github.com/gnarmis"
+link = "GitHub"
+checked = "2026-10-15"
+
+[hastings]
+name = "Peter Hastings"
+bio = "Professor in the School of Computing at DePaul's Jarvis College of Computing and Digital Media, working on natural language processing, cognitive science, and intelligent tutoring systems. PhD in computer science from Michigan; formerly a lecturer at Edinburgh."
+url = "https://www.depaul.edu/faculty/peter-hastings-2"
+link = "Faculty page"
+checked = "2026-10-15"
+photo_source = "https://reed.cs.depaul.edu/peterh/"
+
+[piane]
+name = "Jennifer Piane"
+bio = "Computer vision researcher; PhD from DePaul's School of Computing, 2024, on video analysis for activity recognition, after a B.S. and two master's degrees there. Now at Silgan Closures."
+url = "https://scholar.google.com/citations?user=Pqb9OFcAAAAJ"
+link = "Google Scholar"
+checked = "2026-10-15"
+
+[streeter]
+name = "Harold Streeter"
+bio = "Senior Professional Lecturer in DePaul's School of Computing, teaching human-computer interaction and software engineering courses. M.S. from Brown."
+url = "https://my.cdm.depaul.edu/v2/Public/Academic/Profile/273"
+link = "Faculty page"
+checked = "2026-10-27"
+photo_source = "https://my.cdm.depaul.edu/v2/Public/Academic/ShowPhoto/273"
+
+[cabales]
+name = "Victoria Cabales"
+bio = "Software engineer at Apple. B.S. in computer science and journalism from Northwestern, 2019, where she was a Knight Lab fellow; formerly a Quartz AI Studio fellow."
+url = "https://www.linkedin.com/in/victoria-cabales-37556a120/"
+link = "LinkedIn"
+checked = "2026-10-27"
+photo_source = "https://knightlab.northwestern.edu/people/victoria-cabales/"
+
+[wallach]
+name = "David Wallach"
+bio = "Forward deployed engineer at Palantir, formerly a software engineer at Qualtrics. B.S. in computer science and economics from Northwestern, 2018."
+url = "https://www.linkedin.com/in/d-wallach/"
+link = "LinkedIn"
+checked = "2026-10-27"
+
+[inderhees]
+name = "Rachel Inderhees"
+bio = "Developer at Rightpoint in Chicago, on back-end and cloud work. B.A. in earth and planetary sciences from Northwestern, 2017."
+url = "https://www.linkedin.com/in/rachelinderhees/"
+link = "LinkedIn"
+checked = "2026-10-27"
+
+[cahana]
+name = "Michael Cahana"
+bio = "Technologist and designer in Brooklyn, working on reporting infrastructure, data visualization, and data journalism. Northwestern 2018, in economics, computer science, and environmental policy; formerly a pre-doctoral fellow at the University of Chicago's EPIC."
+url = "https://michaelcahana.com/"
+link = "Personal site"
+checked = "2026-10-27"
+photo_source = "https://github.com/m-cahana"
+
+[ywang]
+name = "Yingliao Wang"
+bio = "Senior software engineer at Chime, formerly at Meta. B.S. from Northwestern."
+url = "https://www.linkedin.com/in/yingliaowang"
+link = "LinkedIn"
+checked = "2026-10-27"
+
+[whitely]
+name = "Maxine Whitely"
+bio = "Software engineer, entrepreneur, and technical consultant in New York, on the founding team of a healthcare AI startup; formerly at Apple Health and Levels Health. Computer science at Northwestern, where she was a Knight Lab fellow."
+url = "https://www.maxinewhitely.com/"
+link = "Personal site"
+checked = "2026-10-27"
+photo_source = "https://knightlab.northwestern.edu/people/maxine-whitely/"
+
+[fisher]
+name = "Jolene Fisher"
+bio = "Associate professor of advertising, public relations and media design at the University of Colorado Boulder, and associate chair for undergraduate studies; her research is on new media, gender, and strategic communication for social change. Chair of Socialcontext's academic advisory board."
+url = "https://www.colorado.edu/cmdi/people/faculty/advertising-public-relations-and-media-design/jolene-fisher"
+link = "Faculty page"
+checked = "2026-10-27"
+photo_source = "https://socialcontext.ai/our-team/"
+
+[coche]
+name = "Roxane Coche"
+bio = "Associate professor and department chair at the University of Florida's College of Journalism and Communications, on sports media and gender in sports coverage; formerly a freelance sports reporter and producer in Paris. On Socialcontext's academic advisory board."
+url = "https://experts.ufl.edu/experts/roxane.coche/"
+link = "Faculty page"
+checked = "2026-10-27"
+photo_source = "https://socialcontext.ai/our-team/"
+
+[guo]
+name = "Lei Guo"
+bio = "Professor at Fudan University's School of Journalism, formerly associate professor of emerging media studies at Boston University; works on media effects, computational social science, and media and democracy in the United States and China. On Socialcontext's academic advisory board."
+url = "https://scholar.google.com/citations?user=p6yjJQcAAAAJ"
+link = "Google Scholar"
+checked = "2026-10-27"
+photo_source = "https://socialcontext.ai/our-team/"
+
+[krugman]
+name = "Todd Krugman"
+bio = "Chief marketing officer at Globant; earlier a senior vice president at The Trade Desk, president at Ogilvy, and partner at Young & Rubicam. Director of Socialcontext's executive board."
+url = "https://www.linkedin.com/in/toddkrugman/"
+link = "LinkedIn"
+checked = "2026-10-27"
+photo_source = "https://socialcontext.ai/our-team/"
+
+[holmes]
+name = "Malcolm Holmes"
+bio = "Director of business development at The Trade Desk, after agency and brand work at IAS, Viacom, and Mindshare. On Socialcontext's executive board."
+url = "https://www.linkedin.com/in/mholmes509/"
+link = "LinkedIn"
+checked = "2026-10-27"
+photo_source = "https://socialcontext.ai/our-team/"

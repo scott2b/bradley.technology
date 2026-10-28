@@ -1,0 +1,25 @@
+{# A publication's author list, emphasizing Scott Bradley. An author with
+   an entry in data/people.toml is rendered by person_macros.html, so author
+   lists and names in running text match. #}
+{% import "person_macros.html" as ppl %}
+
+
+{% macro authors(list) %}
+{%- set people = load_data(path="data/people.toml") -%}
+{%- for a in list -%}
+    {%- if a == "Scott Bradley" -%}<strong>{{ a }}</strong>
+    {%- else -%}
+        {%- set_global hit = false -%}
+        {%- set_global hit_id = "" -%}
+        {%- for id, p in people -%}
+            {%- if p.name == a and p.url -%}
+                {%- set_global hit = p -%}
+                {%- set_global hit_id = id -%}
+            {%- endif -%}
+        {%- endfor -%}
+        {%- if hit -%}{{ ppl::person(id=hit_id, p=hit, shown=a) }}
+        {%- else -%}{{ a }}{%- endif -%}
+    {%- endif -%}
+    {%- if not loop.last %}, {% endif -%}
+{%- endfor -%}
+{% endmacro authors %}

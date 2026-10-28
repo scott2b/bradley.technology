@@ -1,0 +1,71 @@
+{#- Project rendering shared by the two tiers of /projects/.
+    Front matter keeps tagline, place, and year in separate fields, so nothing
+    here has to take a sentence apart to find a fact. A missing field prints
+    nothing: no date is inferred from a description or an affiliation. -#}
+
+{#- Capability slugs, space separated. The filter script reads this. -#}
+{% macro caps(page) %}
+{%- for c in page.taxonomies.capabilities | default(value=[]) -%}
+{{ c | slugify }}{% if not loop.last %} {% endif %}
+{%- endfor -%}
+{% endmacro caps %}
+
+{#- Plate number: the project's position in the section's own order, the
+    same order the tiers are cut from, zero-padded to two digits. Every
+    project has one, whichever tier it lands in, and it is the same number
+    on /projects/, the front door and the project's own page. -#}
+{% macro plate(page) -%}
+{%- set sec = get_section(path="projects/_index.md") -%}
+{%- for p in sec.pages -%}
+{%- if p.permalink == page.permalink -%}{%- if loop.index < 10 %}0{% endif %}{{ loop.index }}{%- endif -%}
+{%- endfor -%}
+{%- endmacro plate %}
+
+{#- Plate number, year where the site records one, then the setting. Sixteen
+    of the projects have no year anywhere, so the middle part is often
+    missing. -#}
+{% macro meta(page) %}
+{%- set setting = page.taxonomies.settings | default(value=[]) | first | default(value="") -%}
+{#- The same lookup as plate() above. Tera cannot call a macro from its own
+    file, and a file that imports itself sends Zola into a loop. -#}
+{%- set sec = get_section(path="projects/_index.md") -%}
+<b>
+{%- for p in sec.pages -%}
+{%- if p.permalink == page.permalink -%}{%- if loop.index < 10 %}0{% endif %}{{ loop.index }}{%- endif -%}
+{%- endfor -%}
+</b>
+{%- if page.extra.year %} · <b>{{ page.extra.year }}</b>{% endif -%}
+{%- if setting %} · {{ setting }}{% endif -%}
+{%- endmacro meta %}
+
+{#- The title block a drawn sheet closes with: ruled cells on the paper, a
+    small caption in each. Title always, then the sheet number and the kinds
+    of work where the caller has them, then who drew it. A project page puts
+    its plate number in the facts rail instead and leaves sheet empty; the
+    home page has no rail, so Sheet 00 names itself here. -#}
+{% macro band(title, sheet="", work="") %}
+<div class="plate-band">
+    <div class="plate-band__cell plate-band__cell--title"><span class="plate-band__label">Title</span>{{ title }}</div>
+    {% if sheet %}<div class="plate-band__cell"><span class="plate-band__label">Sheet</span>{{ sheet }}</div>{% endif %}
+    {% if work %}<div class="plate-band__cell"><span class="plate-band__label">Work</span>{{ work }}</div>{% endif %}
+    <div class="plate-band__cell plate-band__cell--drawn"><span class="plate-band__label">Drawn</span>bradley.technology</div>
+</div>
+{% endmacro band %}
+
+{#- Every project image is a 1200x600 plate made by tools/images.py, whether
+    it started as a screenshot, a photograph, or a generated mark, so one frame
+    fits all of them and nothing here has to ask what kind of picture it is.
+    A drawn sheet also has its negative print (front-matter `print`, written by
+    the same promote step); both paths ride on the img so a layout can set the
+    plate light or dark by position, and `print` picks the dark state up
+    front. A plate with no print shows as it is. -#}
+{% macro image(page, klass, print=false) %}
+{%- if page.extra.image -%}
+{%- set src = page.extra.image -%}
+{%- if print and page.extra.print %}{% set src = page.extra.print %}{% endif -%}
+<div class="{{ klass }}">
+    <img src="{{ src }}" alt="{{ page.title }}" loading="lazy" width="1200" height="600"
+        {%- if page.extra.print %} data-sheet="{{ page.extra.image }}" data-print="{{ page.extra.print }}"{% endif %}>
+</div>
+{%- endif -%}
+{% endmacro image %}

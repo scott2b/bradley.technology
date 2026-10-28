@@ -1,0 +1,8 @@
+{#- A named person in running text, from data/people.toml:
+    {{ person(id="argamon") }} or {{ person(id="argamon", text="Argamon") }}.
+    The rendering lives in person_macros.html so author lists match. -#}
+{%- import "person_macros.html" as pm -%}
+{%- set people = load_data(path="data/people.toml") -%}
+{%- set p = people[id] -%}
+{%- if text %}{% set shown = text %}{% else %}{% set shown = p.name %}{% endif -%}
+{{- pm::person(id=id, p=p, shown=shown) -}}

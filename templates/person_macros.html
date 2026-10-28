@@ -1,0 +1,13 @@
+{# A named person from data/people.toml: the name links to the profile,
+   opened in a new tab, with a hover card: a photo if one exists at
+   static/images/people/<id>.jpg, else a monogram, then the bio. Used by the
+   `person` shortcode and by the publication author lists. #}
+
+{% macro person(id, p, shown) %}
+{%- set path = "static/images/people/" ~ id ~ ".jpg" -%}
+{%- set photo = get_image_metadata(path=path, allow_missing=true) -%}
+{%- set parts = p.name | split(pat=" ") -%}
+{%- set first = parts | first | truncate(length=1, end="") -%}
+{%- set last = parts | last | truncate(length=1, end="") -%}
+<a class="person" href="{{ p.url }}" target="_blank" rel="noopener">{{ shown }}<span class="person-card" role="tooltip"><span class="person-face">{% if photo %}<img src="/images/people/{{ id }}.jpg" alt="" width="{{ photo.width }}" height="{{ photo.height }}">{% else %}{{ first }}{{ last }}{% endif %}</span><b>{{ p.name }}</b><span class="person-bio">{{ p.bio }}</span><i>{{ p.link | default(value="Profile") }} ↗</i></span></a>
+{%- endmacro person %}

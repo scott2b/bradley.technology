@@ -1,0 +1,26 @@
+{#- The two composed project tiers. Their pieces are in project_parts.html. -#}
+{% import "project_parts.html" as parts %}
+
+{#- One entry in the selected grid. -#}
+{% macro entry(page, print=false) %}
+<article class="proj-sel" data-caps="{{ parts::caps(page=page) }}">
+    <a href="{{ page.permalink }}">
+        {{ parts::image(page=page, klass="proj-sel-img", print=print) }}
+        <p class="proj-sel-meta">{{ parts::meta(page=page) }}</p>
+        <h3 class="proj-sel-title">{{ page.title }}</h3>
+        <p class="proj-sel-desc">{{ page.description | default(value=page.extra.tagline) }}</p>
+    </a>
+</article>
+{% endmacro entry %}
+
+{#- One row of the index. Dense on purpose: it reads as deliberate because it
+    sits under a tier that is not. -#}
+{% macro row(page) %}
+<a class="proj-row" href="{{ page.permalink }}" data-caps="{{ parts::caps(page=page) }}">
+    <span class="proj-row-body">
+        <span class="proj-row-title">{{ page.title }}</span>
+        <span class="proj-row-desc">{{ page.description | default(value=page.extra.tagline) }}</span>
+    </span>
+    <span class="proj-row-tag">{{ parts::meta(page=page) }}</span>
+</a>
+{% endmacro row %}

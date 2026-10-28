@@ -1,0 +1,972 @@
+# The editorial layer for generated project marks.
+#
+# tools/images.py reads this. A run pairs one art direction from [styles] with
+# one subject from [projects] and asks an image model to draw it. The direction
+# carries everything about how the set should look, so every mark drawn under
+# it belongs to the same set; the subject says only what the picture is about.
+# No text in a mark, ever: the title sits under it in type.
+
+# ---------------------------------------------------------------- directions
+# Shared ground for every direction: a wide composition that survives being
+# cropped to 2:1, no text, the site accent red #e63946 present somewhere.
+
+[styles.isometric]
+brief = """Isometric technical illustration in the manner of a premium developer-tools
+landing page. Clean isometric geometry with crisp edges, a small set of matte
+materials, soft ambient shading and one accent colour, #e63946, used sparingly.
+Palette otherwise cool neutrals: off-white, light greys, charcoal. Objects float on a
+plain off-white ground with a faint soft shadow. Composition is wide and centred with
+generous space around it. No text, labels or logos."""
+
+[styles.editorial]
+brief = """Bold editorial illustration in the tradition of a business magazine's
+technology section: large flat geometric shapes, overlapping translucent planes,
+strong diagonals, confident negative space. A restrained palette of charcoal,
+warm off-white and one saturated accent, #e63946, with a second muted tone for depth.
+Screen-print texture is acceptable; gradients and 3D are not. Composition is wide and
+centred. No text, labels or logos."""
+
+[styles.blueprint]
+brief = """A technical drawing on a deep ink ground, #1a1a1a: fine precise linework in
+pale grey and white, construction lines, dimension ticks and section hatching, drawn
+the way an engineering plate is drawn. One element is traced in the accent, #e63946.
+No lettering, numerals or title block. Composition is wide and centred, plenty of
+dark ground around the drawing."""
+
+[styles.render]
+brief = """A soft 3D render in the style of contemporary product-design marketing:
+simple geometric forms with matte and frosted-glass materials, gentle studio lighting,
+shallow depth of field, an off-white backdrop. Palette of pale neutrals and charcoal
+with a single accent, #e63946, on one form. Calm and spacious, wide composition,
+centred. No text, labels or logos."""
+
+[styles.codex]
+brief = """A study from a Renaissance engineer's notebook, in the manner of Leonardo's
+codices: a working mechanism drawn in fine sepia and iron-gall ink on aged, warm
+parchment, with construction lines, cross-hatching for shade, faint ruled guides,
+and one or two small marginal studies of a single part. The vocabulary is gears,
+linkages, cams, cranks, escapements, pulleys and timber or iron framing, drawn as a
+machine that could be built, not as ornament. Natural tones only: parchment, umber,
+sepia, a little oxidised iron grey, and one element washed in a dull red ochre, the
+site accent #e63946 muted toward the paper. No lettering, mirror writing, numerals or
+title block. Restraint throughout: an engineer's study, not steampunk decoration, no
+goggles, no rivets for their own sake. Composition is wide and centred, with the
+paper's margin around the drawing."""
+
+[styles.workshop]
+brief = """A working draft of a machine, drawn in pen on aged paper and left as a draft.
+The mechanism mixes three eras in one coherent assembly drawn by a single hand: the
+timber frame and hand-cut gears of a Renaissance engineer's notebook, the flywheels,
+pistons, belts, valves and gauges of a nineteenth-century works, and the parts of
+early computing, punched tape, relay banks, vacuum tubes, tape reels, a cathode-ray
+screen, a keyboard. Every part is drawn as if it works and connects to the next.
+Line only: a technical pen over faint graphite construction lines, with centre lines,
+construction arcs and a few parts left as ghosted outlines, as if still being worked
+out. No wash, no shading, no lighting, no modelled or metallic surfaces, no colour
+fill; hatching only where a sketch would use a few strokes of it, and most areas left
+as open paper. Palette of aged paper, sepia ink and graphite, with one element traced
+in a dull red ochre, the site accent #e63946 muted toward the paper. No lettering,
+numerals, mirror writing or title block. Restraint: an engineer's draft, not
+steampunk decoration, no goggles, no rivets for their own sake. The machine is the
+subject, not the people who use it: at most one small figure, at a control or for
+scale, and never a crowd, an audience or a scene of use. The whole mechanism
+sits in the middle horizontal band of the sheet with clear paper above and below it,
+since the image will be cropped to twice as wide as it is tall; nothing important
+near the top or bottom edge."""
+
+# ---------------------------------------------------------------- subjects
+# What the picture is about, in a sentence or two. The direction decides how.
+
+[projects.newscompass]
+subject = """The path from a news story back to the research it cites: a route traced
+from a piece of writing, through the open, to its source. A compass or a bearing may
+carry the idea."""
+
+# Fewer, larger parts: the same path drawn as four or five machines, each big enough
+# to fill the sheet's height, so the plate reads at a glance instead of as a crowd.
+[projects.newscompass.alt]
+calm = """The path from a news story back to the research it cites, drawn as just four
+or five large machines in a row, each one tall enough to use the full height of the
+band: a printed sheet on a press or reading stand at one end, a large compass or
+bearing instrument at the centre, and a bound volume or card catalogue of papers at
+the other, with one or two mechanisms connecting them. Each part is drawn big and
+plain, with generous paper between the parts, and the whole assembly reads at a
+glance. A compass or a bearing may carry the idea."""
+
+[projects.muster]
+subject = """Many running terminal sessions gathered into a few named, colour-coded
+groups, so that a crowd of identical panes becomes a small number of ordered sets."""
+
+[projects.muster.alt]
+# Written for the workshop direction: what the machine does. A crowd of small
+# terminals has to be kept alive in sets; one pull of a lever raises a whole named
+# set, one pull lowers it, and a saved card says which stations the lever reaches.
+# The machine keeps no notebook of what is running: rods from the stations drive
+# the indicator board directly. Four or five parts, each big enough to read.
+lever = """A machine that raises a set of terminals with one pull. A long shelf of
+small identical stations, each a cathode-ray screen over a keyboard, runs across the
+middle of the sheet in three groups. Each group hangs on its own ganged linkage of
+rods and bell-cranks that runs back to a control pedestal at the left, where three
+tall levers stand in a quadrant, one per group. A punched card dropped into a reader
+on the pedestal sets which stations a lever reaches. One lever is thrown and its
+group's screens are drawn raised and lit, the other two groups lowered and dark. That
+lever and its linkage, from the pedestal out along the shelf to its stations, is the
+one element traced in the accent."""
+board = """A roll of what is running, kept by the machine itself. At the centre an
+indicator board of small drop-flags in rows, like a signal box or an annunciator,
+one flag per station; rods run back from each flag along a trunk to the stations
+behind the board, a long shelf of small screens over keyboards in three groups, so
+the flags are moved by the stations and not by any register. To the left a pedestal
+with a card reader and a bank of levers, one lever per group, that raise or lower a
+whole group at a pull. The rods of one group, from its stations to its row of flags
+on the board, are the one element traced in the accent."""
+
+[projects.adama]
+subject = """Metaphor found inside language: a sentence drawn as a row of tokens with
+dependency arcs over it, and one arc, the figurative relation, singled out from the
+literal ones. The same structure repeated in a few different scripts or alphabets,
+since the system ran across four languages."""
+
+[projects.adama.alt]
+# Written for the workshop direction: what the machine does. It reads a great deal
+# of text in four languages, separates the sentences that are figures of speech from
+# the ones that are plain, and files the figures for people to read for the beliefs
+# underneath. Four or five parts, each big enough to read.
+sifter = """A machine that sifts figures of speech out of plain text. Four reels of
+printed tape, one for each language, unwind from the left into a single reading
+head. Beyond it the tape passes over a tilted sorting grate: plain sentences fall
+through the grate into a bin below, drawn as loose coils, while the few that are
+figures of speech are lifted off by a row of small fingers and carried on a belt to
+the right, where a stamping press punches each one onto a card and drops it into a
+tall filing cabinet. One sentence, from its reel across the grate to its card in the
+cabinet, is the one element traced in the accent."""
+assay = """An assaying machine for sentences. At the centre a large balance beam on a
+pillar, drawn in section with its knife edge and pans: one pan holds a plain weight,
+the other a sentence fed in as a short strip of punched tape, and a needle on a
+graduated arc records how far the strip tips the beam away from its plain reading.
+Four reels of tape at the left, one for each language, queue through a selector to
+the beam in turn. To the right, a relay bank reads the needle and a card punch
+drops only the sentences that tipped the beam into a filing drawer. The needle's
+swing on the arc is the one element traced in the accent."""
+
+[projects.creative-co-author]
+subject = """A first draft in progress: a pen or nib mid-stroke on a page, with a faint
+suggested continuation of the line ahead of it that the writer may take or ignore.
+Momentum, not automation."""
+
+[projects.creative-co-author.alt]
+# Written for the workshop direction: what the machine does. A writer types a
+# first draft. The machine reads the line as it is written and, before the
+# writer can stall, lifts a few phrases that might come next into view beside
+# the page. The writer takes one or types past it. The machine never puts a
+# word on the page itself; an offer that is wrong but sets off a better idea has
+# done its job. Four or five parts, each big enough to read.
+prompter = """A prompter for the first draft. At the centre a writing desk with a
+typewriter, its page rising on a roller, the last typed line still on the platen.
+A follower arm reads the typed line off the page and runs back through rods to a
+tall drum of phrase slips at the left, turning the drum until the slips that
+follow those words come to the top. A small lifting arm draws three slips off
+the drum and holds them in a little window at the right edge of the page, like a
+prompter's box, for the writer to take or ignore. Below the window a tray catches
+the slips that were not taken. Nothing from the machine reaches the page; only
+the typewriter's own keys mark it. The three slips held in the window, and the
+rod that lifted them, are the one element traced in the accent."""
+wheel = """A wheel of phrases turned by the writing itself. A large drum of phrase
+slips fills the centre of the sheet, mounted on a shaft, its surface a close
+lattice of small cards. In front of it a typewriter with its page on the platen,
+and from each typebar a thin rod runs back into a gear train that turns the drum
+as the keys are struck, so the drum is always rolled to the slips that follow the
+last words typed. A window on a bracket beside the page shows the three slips at
+the top of the drum. To the right a tray of slips that were lifted and not taken,
+heaped. A small lever lets the writer take a slip from the window into their
+hand; nothing on the machine can reach the page. The three slips in the window
+are the one element traced in the accent."""
+
+[projects.django-multimail]
+subject = """One account holding several mailboxes: a single central node fanning out to
+a handful of envelopes or address slots, each with its own verification seal, some
+sealed and one still pending."""
+
+[projects.django-multimail.alt]
+# Written for the workshop direction: what the machine does. One account is
+# allowed several addresses. Each new address is only a claim until a letter
+# sent to it comes back; the machine sends the letter, waits, and when the
+# reply returns with the right token it turns the address over to verified.
+# An address that never answers is struck off when the account is closed.
+# Four or five parts, each big enough to read.
+register = """A machine that keeps several addresses to one account and trusts none
+of them until it has heard back. At the centre a tall spindle, one account, with
+five address plates hung on it like keys on a ring, each plate a small engraved
+card with a hinged tab that reads PENDING on one face and VERIFIED on the other. At
+the left a small letter press stamps a sealed verification slip for each new plate
+and drops it down a chute to the post. At the right a return slot takes the slips
+that come back; a comparator of pins reads the seal on a returned slip against the
+plate it was cut for and, on a match, throws a pawl that flips that plate's tab to
+VERIFIED. A trap below the spindle, opened by a lever marked for a closed account,
+lets any plate still on PENDING fall into a bin. Four plates are turned to
+VERIFIED; the fifth, still PENDING with its slip out, is the one element traced in
+the accent."""
+post = """A proving loop for addresses. At the left a letter press cuts a slip for
+each new address, punches a token into it, and seals it into a small canister; the
+canister enters a pneumatic tube that leaves the machine, runs out in a long loop
+across the upper part of the sheet beyond the frame, and comes back in at the
+right. At the centre the account itself, a spindle hung with several address plates,
+each plate with a copy of its token filed in a slot beside it. At the right the
+return station: a canister dropping out of the tube, a comparator of pins lowering
+onto its slip and onto the filed copy at once, and a pawl that clicks the matching
+plate over from PENDING to VERIFIED when the two agree. Below, a small bin for
+canisters that never came back. One canister, out on the loop and not yet home, is
+the one element traced in the accent."""
+
+[projects.jacktaxa]
+subject = """A phylogenetic tree of fish taxa, drawn as a branching cladogram with a
+few specimen silhouettes at the leaves, and one clade highlighted where statistical
+resampling has tested the branch."""
+
+[projects.jacktaxa.alt]
+# Written for the workshop direction: what the machine does. It takes a stack of
+# specimen records, assembles them into a branching tree of descent, then withdraws
+# a few records at a time and rebuilds the tree over and over, counting at each fork
+# how often that fork comes back. Four or five parts, each big enough to read.
+builder = """A machine that builds a tree of descent and then shakes it. At the left
+a tall deck of punched specimen cards in a hopper; a cam-driven arm withdraws a few
+cards from the deck on each pass and sets them aside in a side tray. The remaining
+cards feed a comparator of brass pins and levers at the centre, which sets a tree of
+hinged rods on a vertical board to the right, the rods branching upward from one root
+into a dozen tips, each tip holding a small pinned fish outline. At every fork of the
+tree a small counter wheel ticks over each pass the fork comes back. One fork and its
+counter wheel are the one element traced in the accent."""
+survivors = """The tree as the subject: a large branching tree of hinged brass rods
+on a drafting board filling the middle of the sheet, root at the left, a dozen tips
+at the right each with a small pinned fish outline, drawn as a mechanism with its
+pivots and construction arcs. Beneath the solid tree, several earlier trees from
+earlier passes are ghosted in faint graphite on the same board, their forks falling
+in different places. At the far left, smaller, the hopper of punched specimen cards
+and the lever that withdraws a few before each pass. The one fork that falls in the
+same place on the solid tree and every ghost beneath it is the one element traced in
+the accent."""
+
+[projects.privacy-mirror]
+subject = """A phone radiating signals over WiFi, Bluetooth and NFC, shown as concentric
+waves leaving it, and a mirror or screen opposite reflecting those same waves back so
+their contents are laid bare."""
+
+[projects.privacy-mirror.alt]
+# Written for the workshop direction: what the machine does. Phones announce
+# themselves on the air all the time. The machine stands in a street, listens,
+# reads what each phone in reach is saying, and shows it back on a board facing
+# the pavement, so a passer-by sees their own device named. Four or five parts,
+# each big enough to read.
+mirror = """A machine that shows people what their phones are saying. At the centre a
+tall board on a stand faces the pavement at the right like a shop mirror, but its
+face is rows of split-flap lines, each line naming one device heard. Above the board
+a rack of three listening horns, large, middle and small, one per band, turned
+toward the street. Along the right edge a few small passers-by walk along the
+pavement, each with a phone in hand and faint arcs spreading from it. From the horns
+cables run down the back of the board to a tuner and a relay decoder in the base,
+and a line-setter of cams and rods works the flaps from behind. One walker's phone,
+the arcs from it into the big horn, and the single flap line on the board that
+names it are the one element traced in the accent."""
+listener = """A listening engine on a street corner. At the left a mast carries three
+listening horns of different sizes, one per band, each turning on its own gimbal
+toward the pavement beyond the left edge, where two or three small passers-by walk
+with phones in hand. The horns feed a receiver at the centre, a cabinet of dials,
+coils and a tuning drum, drawn open; beside it a relay decoder sorts what each
+phone announces and a ticker printer punches it onto a strip. The strip runs up to
+a large board at the right, a panel of lamp cells facing the street, where each
+device's line lights as its strip passes. The path of one announcement, from a
+phone through the big horn and the decoder to its lit line on the board, is the one
+element traced in the accent."""
+
+[projects.smart-kitchen]
+subject = """An object-oriented class model of a kitchen: one controller at the centre
+with three subsystems beneath it, grocery, recipe and appliance, each reaching out to
+the devices it commands. A UML-like structure, not a kitchen scene."""
+
+[projects.smart-kitchen.alt]
+# Written for the workshop direction (2026-10-23): what the system does, as one
+# machine. One controller over three subsystems: groceries counted in and out so
+# the stock keeps itself, recipes proposed from what is in stock, and appliances
+# of any make on one common fitting. Kept to the idea and its main parts; the
+# Tie-O-Matic round showed that spelling out each linkage gets broken mechanisms.
+controller = """A machine that runs a kitchen from one controller. In the centre
+stands a tall controller, a cabinet of clockwork with a rotating dispatcher drum
+on top, and from it three rods reach out to three stations. At the left a pantry
+of shelves holds jars and tins, with a weighing platform at its foot where
+groceries are counted in and out; beside it a row of empty pegs marks what has
+run low. In the middle below the controller a recipe file of blank cards on a
+rotating rack, one card drawn out and held up beside the jars it calls for. At
+the right a stove, an oven and a kettle stand side by side, each a different
+make and shape, all coupled to the controller by the same standard fitting. No
+tape, no reels, no vacuum tubes, no screens, no keyboards, no figures. The
+controller and its dispatcher drum are the one element traced in the accent."""
+
+# Rewritten in the way of the earlier workshop subjects (2026-10-23): a metaphor
+# for what the design does, its material flowing through to its product, no
+# engine and no list of parts to leave out. One controller between three
+# subsystems that never deal with each other directly: groceries counted in when
+# they arrive and out when used, so the stock keeps itself and the shopping list
+# follows; recipes proposed against what is in stock; appliances of any make
+# taking instructions through one common fitting. The product is a meal routed
+# through the controller from pantry to stove. No figures, no lettered words.
+# Four or five parts, each big enough to read.
+signalbox = """A kitchen run from a signal box. In the middle of the sheet a small
+raised signal box with a frame of tall levers, and from it three short lines
+of rail run out to three stations, every movement between them passing the
+box. At the left a pantry of shelves of jars and tins, with a weighing
+platform at its door where each delivery is counted in, and beside it a board
+of pegs where an empty peg marks what has run out. Below the box a revolving
+file of blank recipe cards, one card raised on a little flag beside the jars
+it needs. At the right a stove, an oven and a kettle of three different makes
+and shapes, each with the same brass coupling on its side where its rail
+ends. A small cart on the rail carries jars from the pantry towards the stove.
+The lever frame of the signal box, with the one lever pulled, is the one
+element traced in the accent."""
+dumbwaiter = """A kitchen house drawn in section around one dumbwaiter. A tall
+narrow house fills the middle of the sheet, its front cut away to show three
+floors, with a dumbwaiter shaft running up through the centre of all three and
+a hand winch at its head. In the cellar a pantry of shelved jars and tins and a
+weighing scale at the coal-chute door, where deliveries come down and are
+counted. On the middle floor a library of blank recipe cards in a revolving
+drum, one card set out on a stand. On the top floor a stove, an oven and a
+kettle of three different makes, each plugged into the same brass fitting in
+the wall. Nothing passes between the floors except by the dumbwaiter, whose
+car stands open at the middle floor with jars from the cellar and the chosen
+card in it, about to rise to the stove. The dumbwaiter shaft, its car and the
+winch are the one element traced in the accent."""
+
+[projects.software-defined-radio]
+subject = """The full broadcast spectrum opened up by software: an antenna and a wide
+band of frequencies drawn as a spectrum plot, with the narrow slice consumer radios
+cover marked against the whole range now reachable."""
+
+[projects.software-defined-radio.alt]
+# Written for the workshop direction: what the machine does. Ordinary radios
+# are a fixed box per band, a handful of bands in all. This machine takes the
+# whole air in through one antenna, cuts it into numbers, and lets a program
+# on tape pick any band out of the whole range, so that everything on the air
+# can be listened to, not only the few slices a shop radio reaches. Four or
+# five parts, each big enough to read.
+open = """A machine that opens the whole spectrum. Across the middle of the sheet a
+long graduated scale, like one great tuning dial laid flat, runs from the far left
+to the far right, the whole range of the air marked off along it. Under the scale,
+clamped at a few points, sit four small fixed receivers of the old kind, crystal
+sets in wooden boxes, each reaching only the short span of scale directly above it.
+Above the scale a travelling carriage on a lead screw carries the one real listening
+head, and a punched tape fed into a reader at the left turns the screw and sets the
+carriage anywhere along the scale. An antenna of modest height stands at the left
+end feeding the scale; a strip printer and a horn at the right end give out what the
+carriage hears. The carriage, set far along the scale past the last fixed box, and
+the slice of scale under its head are the one element traced in the accent."""
+program = """A machine that replaces a shelf of radios with a program. At the left
+four old fixed receivers in wooden cabinets, one per band, each with its own coils
+and dial, stand on a rack drawn struck through with a faint construction cross, out
+of use. At the centre a single antenna feeds a sampling engine, a drum that cuts
+the incoming air into a stream of numbers and punches them onto a wide card that
+feeds a reading desk at the right. On the desk a loop of program tape runs through
+a reader and sets a bank of selector levers that pull one band out of the stream;
+a horn and a strip printer below give out what was picked. The program tape, its
+reader, and the one band it draws out of the stream to the horn are the one
+element traced in the accent."""
+
+[projects.tie-o-matic]
+subject = """A colour-theory model of choosing a tie, corrected by data: a colour wheel
+with its harmony schemes drawn as chords, beside a bar chart of what four hundred
+people actually picked, with most of the theory's schemes standing empty."""
+
+[projects.tie-o-matic.alt]
+# Written for the workshop direction (2026-10-23): what the machine does. It picks
+# a tie for a shirt from colour theory, and the theory is corrected by what four
+# hundred people chose: monochrome heavily, analogous and complementary a little,
+# triadic and double-complementary never, so those two schemes came out of the
+# model. Kept to the idea and its main parts, like the subjects of the accepted
+# plates: a first version that spelled out every linkage came back with wheel
+# rods and gearing that could not work.
+chooser = """A machine that picks a tie for a shirt, its colour theory corrected by
+what people actually chose. In the middle a large colour wheel stands upright in
+a timber frame, five rods pinned across its face for the five harmony schemes;
+two of the rods are only faint outlines, taken out. Below the wheel stand five
+tall glass columns of beads, one nearly full, two with a few beads, two empty.
+At the left a shirt hangs on a stand, and beside it a rack of ties. A selector
+arm reaches from the wheel's frame to the rack and holds one tie up against the
+shirt. A small steam engine with a flywheel sits at the base and works the
+machine. No tape, no reels, no vacuum tubes, no screens, no keyboards. The
+selector arm and the tie it holds are the one element traced in the accent."""
+
+# Drawn 2026-10-23 without being asked for, while going back to the earlier way of
+# writing subjects (a metaphor, the material flowing to its product, no engine,
+# no list of parts to leave out). Three of the four drawings brought back the
+# brief's tape, screens and keyboards; Scott kept chooser-2. The Tie-O-Matic proposed ties for
+# a shirt from the colour wheel's five harmony schemes, then set those against
+# four hundred human choices: monochrome dominant, analogous and complementary a
+# little, triadic and double-complementary never. The product is a colour theory
+# cut down by evidence. No figures, no lettered words. Four or five parts, each
+# big enough to read.
+counter = """A colour theory put on the shop counter. At the left a shirt on a
+small dress form, its colour read by a prism on a swinging arm. Above it a
+large colour wheel stands upright in a frame, and from its rim five chutes
+run down to the right, one for each harmony scheme, each delivering ties onto
+its own stretch of a long shop counter across the middle of the sheet. Behind
+the counter, over each stretch, a hanging rail holds the ties that were taken
+up: the first rail crowded, the next two with a few ties each, the last two
+bare. Over those two bare stretches the chutes are shut off by hinged gates
+swung down across their mouths, and the ties sent down them lie heaped and
+untouched on the counter. The two shut gates, and the heaps below them, are
+the one element traced in the accent."""
+ballot = """A colour wheel put to the vote. In the middle of the sheet a large
+colour wheel stands upright in a timber frame, a disc of segments with five
+brass templates hinged over its face, one for each harmony scheme: a single
+segment, a fan of neighbours, a pair of opposites, a triangle, a cross. Below
+the wheel stand five glass ballot jars in a row, one under each template. At
+the right a tall hopper of small tokens, one for every tie a person chose,
+pours down a sorting board of pins that sends each token to its jar: the
+first jar nearly full, the next two with a few tokens, the last two empty. The
+templates over the two empty jars are folded back off the wheel on their
+hinges. At the left a shirt on a small dress form, with one tie laid against
+its collar. The full jar and the single-segment template above it are the one
+element traced in the accent."""
+
+[projects.visual-recipes]
+subject = """A recipe redesigned for use at the stove: a cooktop from above with one
+burner lit for the step in hand, and the steps of a recipe laid out as a sequence of
+timed, ordered stages rather than as prose."""
+
+[projects.visual-recipes.alt]
+# Written for the workshop direction: what the machine does. A recipe arrives as
+# prose. The machine reads it sentence by sentence and sets each ingredient and
+# each action as a small picture, a knife, an onion, a pan, a flame, a clock
+# face, and draws them out as one diagram that can be read at a glance: what
+# goes with what, in what order, for how long. The drawing is the product. The
+# stove is where the drawing will be used, not what the machine is for. Four or
+# five parts, each big enough to read.
+engraver = """A recipe drawn out as pictures. At the left a reading stand holds the
+recipe as a page of prose, a follower arm tracking down the sentences. The arm
+runs back through linkage to a large drafting table that fills the centre of the
+sheet, where a pantograph arm is drawing the recipe as a diagram of small
+pictograms: an onion, a knife, a bowl, a pan, a flame, a clock face, each in a
+little frame, joined by lines and arrows that run from the ingredients at the top
+down to the finished dish at the bottom, with a small clock face beside each step
+that takes time. The diagram is the largest thing on the sheet and reads clearly.
+At the right a tall case of pictogram dies, like a typesetter's case, sorted into
+rows, from which a small picker arm lifts the die for each noun and verb the
+follower reads and hands it to the pantograph. In the lower right, small, a single
+pot on a burner where the finished drawing is pinned up on a hook above it. The
+one pictogram being set, and the picker arm placing it, are the one element
+traced in the accent."""
+score = """A recipe set as a score. At the left the recipe as a page of prose on a
+spike, and beneath it a slitting blade cutting the page into strips, one sentence
+each. The strips feed a composing machine at the centre that sets each sentence
+as a row of pictogram dies, a knife, an onion, a pan, a flame, a clock face,
+drawn from a case of dies above it, and locks the rows into a wide form like
+lines of a musical score, one staff per pan, time running left to right with bar
+lines at the minutes. From the form a long printed sheet comes out across the
+right of the plate and hangs down in view, the finished score: rows of small
+pictures with their arrows and clock faces, no words, readable at arm's length.
+Small, beneath it, a pan on a burner to say where the score will hang. The row of
+dies being struck into the form, and the strip it came from, are the one element
+traced in the accent."""
+
+[projects.buzz]
+subject = """A blog post turned into a performance: a page of writing on one side and,
+on the other, a small stage with a figure on it speaking the same text aloud, the
+words travelling from page to mouth. Mid-2000s web, not a theatre."""
+
+[projects.buzz.alt]
+# Written for the workshop direction: what the machine does. Buzz read popular
+# blogs, picked out the compelling personal story in them, gathered what other
+# blogs were saying about the same story, and had a virtual character perform
+# it aloud. The character is drawn as a mechanical automaton on a small stage,
+# the plate's one figure; no audience. No lettered words on the sheet. Four or
+# five parts, each big enough to read.
+automaton = """A machine that turns a blog post into a performance. At the left a
+tall feed of many loose pages, blog posts, runs down a chute past a reading
+head with a lens that lifts out one page and lets the rest fall into a bin.
+That page goes into a perforator that punches it into a long roll of paper,
+like a player-piano roll, and the roll runs across the middle of the sheet
+into the base of a small theatre at the right: a proscenium arch with drawn-back
+curtains, and on its stage a mechanical speaking head and shoulders, an
+automaton with a hinged jaw, eyelids on levers, bellows in its chest and a
+voice horn beside it. Along a rail above the roll a row of small clipped pages
+from other blogs, the reactions to the same story, travels along with it to
+the stage. The punched roll, from the perforator to the automaton's base, is
+the one element traced in the accent."""
+cams = """A story cut into cams to drive a performer. At the left a rack of
+many loose pages, blog posts, with a picker arm drawing one page out of the
+stack. The page is clamped on a small lathe that cuts it into a stack of cams
+on a single camshaft, each cam a different profile. The camshaft runs across
+the middle of the sheet to a small puppet theatre at the right, a proscenium
+with drawn-back curtains, and the cams lift a row of followers that work the
+strings of a single marionette on the stage, its jaw and hands raised as if
+mid-sentence, with a voice horn beside it. On a board above the camshaft a
+few small clipped pages from other blogs are pinned beside the story, the
+reactions to it. The camshaft and the marionette's strings are the one
+element traced in the accent."""
+
+[projects.knight-lab-tools]
+subject = """A workshop wall of small tools serving one shop: a rack holding a
+deployment lever, an extraction sieve, a tagging stamp and a curation tray, each
+plumbed by a line back to a single server rack at the centre."""
+
+[projects.knight-lab-tools.alt]
+# Written for the workshop direction: what the machine does. A lab that ships
+# many small applications needs shared tools rather than one product: a lever
+# that sends a finished project to its environment, foundations pressed from
+# one template so a new environment is a known shape, rollers that strip a web
+# page down to its article, a stamp that fits a message with its tags, and a
+# circle of readers passing what they read to each other. No lettered words,
+# no hash glyphs: tags are small pennants. Four or five parts, each big enough
+# to read.
+bench = """A tool wall serving a shelf of small machines. Across the top of the
+sheet a long shelf holds a row of small finished machines, each a different
+shape, a dozen of them, the shop's many small applications. Below the shelf a
+long workbench with four stations plumbed by pipes back to one tall server
+cabinet at the centre. At the left a deploy station: a big lever on a quadrant,
+and a lift on a rail that takes one machine off the shelf and lowers it onto a
+plinth on the ground, where a row of identical plinths has been pressed out of
+a single mould by a small press. Right of centre a stripping station: a web
+page fed between rollers that peel away its frame, menus and advertisements
+falling as scrap into a bin beneath, the article column coming out the other
+side clean. Then a tagging station: a short slip of a message under a stamp
+that pins two or three small pennants to its edge. At the right a curation
+station: a ring of small chairs around a brazier, slips of reading passed from
+hand to hand around the ring. The lift, and the one machine it is lowering
+onto its plinth, are the one element traced in the accent."""
+yard = """A builders' yard for small machines. At the left of the sheet a mould
+press stamps identical foundations out of one template, a plate with the same
+cut-outs each time, and a belt carries the fresh foundations to a row of them
+set out across the middle of the sheet, each with the same pipe stubs and
+posts rising from it. Above, a gantry crane on rails runs the length of the
+row, and a long lever at its base sends the crane: it lifts a small finished
+machine from a loading dock at the right and lowers it onto an empty
+foundation, where the pipes meet. At the right, on a shelf by the dock, the
+small side tools of the yard: a pair of rollers with a page going in whole and
+coming out as a bare column, a stamp with a tray of small pennants beside it,
+and a ring of figures around a brazier with slips passing between them. The
+crane's hook, the cable, and the one machine hanging from it over its
+foundation are the one element traced in the accent."""
+
+[projects.listening-post]
+subject = """A dialogue rather than a dashboard: many small incoming speech bubbles
+arriving at a post, and a reply line going back out from it to each one, so every
+question has its own answer instead of a bar chart summarising them all."""
+
+[projects.listening-post.alt]
+# Written for the workshop direction: what the machine does. Most social
+# tooling of the period only listened: it counted what was said and charted
+# it. Listening Post answered. Out of a great many incoming mentions it picks
+# out the few addressed to the organisation, and sends each of those back a
+# reply of its own, down the same line it came in on. The hard part is the
+# picking. The many voices are drawn as lines coming in, not as people: a
+# first round drew a town square of figures and the crowd took over the sheet.
+# No lettered words on the sheet. Four or five parts, each big enough to read.
+returns = """A listening machine that answers down the same line. From the left
+edge of the sheet a great many thin speaking tubes come in side by side, each
+ending in a small flared mouthpiece hung in a long rack, dozens of them. Most
+of the tubes run on into a manifold and feed a tall counting drum, whose pen
+draws one rising line while its spent chart paper curls away into a bin
+beneath: the old way, counting. Along the rack a selector carriage on a rail
+holds a small ear trumpet to each mouthpiece in turn, and where it finds one
+speaking to the machine it throws a small switch that turns that one tube
+aside to a reply station at the right: a writing desk with a keyboard and a
+small reel. From the reply station a single return tube runs back along the
+rack and couples onto the very mouthpiece the voice came from. The return
+tube, and its coupling onto that one mouthpiece, are the one element traced
+in the accent."""
+wires = """A telegraph post that answers. A harp of many telegraph wires comes in
+from the left edge of the sheet on a row of insulator poles, dozens of wires
+strung in parallel, each ending at a small sounder on a long bench. Most of
+the sounders tap into a common counting wheel whose dial needle climbs and
+whose printed tape falls away in loops into a basket: the old way, counting.
+Above the bench a picker carriage runs on a rail along the row of sounders,
+and where a sounder's small bell is ringing it stops and lowers a key onto
+that one wire. Behind the carriage a reply desk with a typewriter keyboard
+and a reel feeds the key, and the answer goes back out along that same wire
+to the left edge. That one wire, from the key back out past the poles, is
+the one element traced in the accent."""
+
+[projects.local-angle]
+subject = """A national news story pinned to a map: an article at the top with lines
+running from the people and organisations named in it down to the towns those names
+belong to, one town singled out as the local angle."""
+
+[projects.local-angle.alt]
+# Written for the workshop direction: what the machine does. A national story
+# can matter to a town it never mentions, because the executive in it grew up
+# there or the company in it is headquartered down the road. The machine
+# lifts the people and companies out of a national article, follows each to
+# the town it belongs to, and hands the story to that town's own newsroom.
+# No lettered words and no map: towns are told apart by their own buildings,
+# a water tower, a steeple, a grain elevator. Four or five parts, each big
+# enough to read.
+tubes = """A sorting office for a national paper. At the top left a broad
+national newspaper arrives off a wire and is laid on a cutting table, where a
+die lifts small cut-out figures out of it: a portrait of a person in a suit,
+the silhouette of a factory with a chimney, a bank's columned front. Each
+cut-out drops into its own pneumatic tube. The tubes run in a bundle across the
+middle of the sheet and then fan down to a row of small towns along the
+bottom, each a little cluster of buildings told apart by a single landmark: a
+water tower, a church steeple, a grain elevator, a courthouse dome, a lighthouse.
+The portrait's tube ends at a small house with a porch in one town, the
+factory's at a works gate in another. In the town at the lower right a little
+local print shop takes the whole national story in from the tube and runs it
+on its own small press. That one tube, and the story arriving at the small
+press, are the one element traced in the accent."""
+roots = """A national story with roots. At the top of the sheet a large newspaper
+page held up on a frame like the crown of a tree, a broad trunk of braided
+cable running down from it into the ground line across the middle of the
+sheet. Below the ground, drawn in section, roots spread out wide from the
+trunk, each root starting at a small figure cut from the page, a person in a
+suit, a factory with a chimney, and ending in the cellar of one small town at
+the bottom. The towns stand in a row along the ground line above their
+cellars, each told apart by one landmark: a water tower, a church steeple, a
+grain elevator, a courthouse dome. In one town a small local newsroom with a
+hand press has a pump in its cellar drawing up along a root, and a copy of
+the national story comes up out of its press. That one root, from the figure
+on the page to the town's pump and press, is the one element traced in the
+accent."""
+
+[projects.news-context]
+subject = """An article at the centre with the material that surrounds it assembled
+around it: related discussion, a circulating quotation, what a named person said
+elsewhere, each drawn as a panel attached to the story by a connector."""
+
+[projects.news-context.alt]
+# Written for the workshop direction: what the machine does. A news story is
+# rarely self-contained. The toolkit takes one article and gathers what sits
+# around it: the discussion it set off, a quotation from it as it travels into
+# other papers, and what the people named in it are saying in their own
+# channels. The gathered pieces are set alongside the story for the reader.
+# No lettered words on the sheet. Four or five parts, each big enough to read.
+mount = """A mounting frame built around one article. At the centre of the sheet
+a single newspaper page clamped upright on an easel, and around it a large
+hinged frame with empty panels on every side, being filled. Three feeders reach
+in from the edges. From the left, a tangle of threads from a crowd of small
+figures at little tables, all talking, is gathered by a comb and wound onto a
+spool that sets one panel. From the top, a small strip cut from the article
+runs out along a wire through a line of other newspapers pegged up in a row,
+punching into each in turn, and comes back to set its own panel. From the
+right, a line runs to a small figure on a plinth whose likeness is printed on
+the article, speaking into a horn of their own, and an ear trumpet catches what
+they say for the third panel. A reader's chair stands in front of the easel.
+The strip cut from the article and its wire through the other papers are the
+one element traced in the accent."""
+orrery = """An orrery of context. At the centre of the sheet a newspaper page held
+flat on a turntable, like the sun of an orrery, with long brass arms swinging
+out from its hub. At the end of each arm a small body that belongs to the story:
+a round table of figures leaning in to argue, a stack of other newspapers each
+with the same small strip pasted into it, and a figure on a plinth whose
+likeness also appears on the article, speaking into a horn of their own. Each
+arm carries a small tray back along it to the hub, bringing a piece of what it
+found, and the trays settle as a ring of cards laid around the article's edge.
+A crank and gear train at the base turns the whole. At the left a reader leans
+on a rail to look down at the article and its ring. The arm to the stack of
+papers, and the strip it follows, are the one element traced in the accent."""
+
+[projects.slimformation]
+subject = """A week of reading measured: a ring or bar chart of time split across a
+handful of content categories beside a small set of goal markers, one category
+overrunning its target and marked in the accent."""
+
+[projects.slimformation.alt]
+# Written for the workshop direction: what the machine does. Slimformation
+# watched what a person read for a week, sorted each page into a topic on the
+# reader's own machine, timed it, and set the totals against goals the reader
+# chose, with the reading level as a separate measure. The product is a
+# measured week of reading: per-topic totals against their goals, one running
+# over. Sorting happened locally, so the machine is a closed case with nothing
+# leaving it. No figures at all, no lettered words: topics are told apart by
+# position and shape, never labels. Four or five parts, each big enough to read.
+cylinders = """A machine that measures a week of reading. At the left a reading stand
+holds one open page under a lens, with a clockwork escapement beside it that
+lets a measured stream of sand run while the page is read. Below, a sorting
+gate with six chutes swings to route that sand into one of six tall graduated
+glass cylinders standing in a row across the middle of the sheet, each
+cylinder a different height of fill. Each cylinder has a sliding brass ring
+clamped on it at a chosen level, the goal. Five sit at or below their rings;
+one has filled past its ring and spills over its lip. At the right a separate
+dial gauge with a weighted needle reads how demanding the page is. The whole
+mechanism sits inside an open-sided cabinet frame with no pipes or wires
+leaving it. The overfilled cylinder, with its ring and the spill, is the one
+element traced in the accent."""
+abacus = """A clockwork that keeps the tally of a week's reading. At the left a
+book-holder with a single page clamped open, and above it a pendulum clock
+whose escapement counts out beads while the page stays open. A sorting comb
+with six teeth sends each bead down one of six inclined wires into a large
+abacus frame across the middle of the sheet: six vertical rods, each filling
+with beads from the bottom. On every rod a sliding peg is set at a chosen
+height, the goal. Five rods stop below their pegs; one rod has stacked past its
+peg and its beads bank up against the top rail. Beside the abacus a small
+balance weighs one page against graded brass weights, for how demanding the
+reading is. Everything sits on one base inside a closed glass case, nothing
+leaving it. The overrun rod, its beads and its peg, is the one element traced
+in the accent."""
+
+[projects.careeroverview]
+subject = """Stacked taxonomies with a funnel over them: four horizontal tiers of
+labelled slots, occupation, industry, degree subject, state, one above the other,
+and a three-step funnel narrowing down through them to a single matched cell."""
+
+[projects.careeroverview.alt]
+# Written for the workshop direction: what the machine does. CareerOverview
+# was a large site generated from structured data, labour statistics and
+# school records, at the InfoLab before language models: a page for every
+# crossing of its directories (career families, industries, states, degree
+# programs), with a three-step finder on top. The product is a full set of
+# generated pages, one per crossing. No figures at all, no lettered words:
+# tables are ruled grids of marks, and the axes are told apart by position and
+# shape, never labels. Four or five parts, each big enough to read.
+press = """A machine that prints a page for every crossing of two directories.
+At the left a stack of large bound ledgers, their open pages ruled tables of
+small marks, lies on a feed table where a row of reading fingers runs down
+the columns. Their readings go up rods into a composing frame: two sets of
+sliding bars, one set running across and one up and down, and where a
+crossing bar meets a running bar a type case drops into the forme. A small
+platen press beside it prints the set page, and a conveyor carries finished
+pages to the right into a tall cabinet of pigeonholes in a ruled grid, rows
+crossing columns, almost every hole already holding a page. One page, from
+its two crossed bars through the press and along the conveyor to its empty
+pigeonhole, is the one element traced in the accent."""
+gantry = """A machine that fills a cabinet with generated pages. Across the
+right two-thirds of the sheet stands a great cabinet of small drawers in a
+ruled grid, rows crossing columns, each drawer one crossing of two
+directories. A travelling gantry on rails along its top and down its side
+carries a small printing head from drawer to drawer. At the left a drum
+reader turns a long sheet of ruled statistical tables, small marks in
+columns, and feeds it by a belt to the printing head; behind the drum a
+row of punched cards on a chain says which drawer comes next. Most drawers
+already hold a printed page edge-up. The gantry, its printing head, and the
+one drawer it is filling, standing half open, are the one element traced in
+the accent."""
+
+# The gantry plate redrawn as one drive you can trace (2026-10-16): Scott found
+# gantry-1 was parts standing side by side, nothing turning anything. Every part
+# here sits on the chain from the engine to the drawer, and the subject names the
+# early-computing kit the brief lists as absent, since none of it is on that chain.
+drive = """One machine, driven by one engine, that fills a cabinet with generated
+pages. In the middle stands a small steam engine: a cylinder whose piston rod
+works a crank that turns a large spoked flywheel facing the viewer. Behind the
+flywheel's hub a pair of bevel gears, meeting at a right angle, turns a single
+long line shaft that runs left and right across the top of the machine on
+bearing posts. At the left the line shaft turns, through a spur gear on its
+axle, a great drum in a timber frame; the drum carries a long sheet of ruled
+statistical tables, small marks in columns, winding from a lower roller up
+over the drum. A comb of reading fingers rests on the sheet where it crosses
+the drum, and from the comb a bundle of thin linkage rods runs right beside
+the line shaft, through guides, to the printing head. At the right the line
+shaft ends in a sprocket, and a chain from it drives a travelling gantry along
+the top rail of a great cabinet of small drawers in a ruled grid. The printing
+head rides the gantry, and below it one drawer stands half open, a printed
+page going into it. Every part is on this chain from engine to drawer: no
+tape, no reels, no vacuum tubes, no screens, no keyboards. The gantry, its
+printing head and the half-open drawer are the one element traced in the
+accent."""
+
+[projects.cityhallmonitor]
+subject = """A city archive made searchable: tall shelves of council records in
+section, with a search beam or lens sweeping across them and a handful of documents
+pulled forward from the stacks, the one worth reading traced in the accent. A
+council chamber dome may sit above."""
+
+[projects.cityhallmonitor.alt]
+# Written for the workshop direction: what the machine does. The city council
+# puts out a flood of records and almost all of it is routine: congratulations,
+# sign permits, awnings, sidewalk cafes. The machine collects every record, lets
+# the routine drop out of sight by default, sorts what is left into the kinds
+# an investigator works in, and hands forward the few documents worth reading.
+# No lettered words on the sheet. Four or five parts, each big enough to read.
+sieve = """A sieve for a city's paper. At the top left a council chamber, a domed
+hall on a plinth, with a chute running out of its doors down which a steady flow
+of papers slides, bound records with ribbon seals. The chute empties onto a wide
+tilted riddle at the centre of the sheet, a mesh on a frame shaken by a crank,
+and nearly every paper falls through the mesh into a deep bin beneath the floor,
+out of sight; a small lever on the bin's side can tip it back up into view. The
+few papers that stay on the mesh run along a belt to a sorting rack at the right,
+a cabinet of pigeonholes, each hole with a small brass figure for its kind, a
+coin for claims, a house for developments. Beside the rack an investigator's
+reading desk with a lamp and a lens, and a single document laid open on it. That
+one document, and the arm that lifted it from the rack to the desk, are the one
+element traced in the accent."""
+stacks = """Every record kept, and most of them hidden. A long gallery of shelves
+runs across the middle of the sheet, holding the whole collection of council
+records in bound volumes, filled from the left by a conveyor that comes out of a
+domed council hall. A roller blind on a rod is drawn down over most of the
+shelves, hiding the routine volumes behind it, with a cord at the end so a
+reader can raise it when they need what is there. Along the uncovered part a
+search carriage on a rail carries a lens and a lamp, sweeping the spines. On a
+tray under the carriage a few volumes pulled forward. At the right a reading
+desk where one volume lies open. The one volume on the desk, and the carriage
+arm that drew it from the shelf, are the one element traced in the accent."""
+
+[projects.nato-in-chicago]
+subject = """One event seen from many places: a single point at the centre, a summit
+table or a city skyline mark, with news pages and short message bubbles arriving from
+the edges of a globe grid, grouped by where they came from, and two comparison panels
+side by side beneath."""
+
+[projects.nato-in-chicago.alt]
+# Written for the workshop direction: what the machine does. One summit in one
+# city, and the whole world talking about it at once. The machine gathers what
+# was said, sorts it by where it was said from, and sets the places side by
+# side so a reader can see that the world and the host city were not talking
+# about the same thing. The comparison is the product. No lettered words on the
+# sheet, and no map pin to place the city: later rounds tried both and Scott
+# turned them down. Four or five parts, each big enough to read.
+tally = """What the world and the city were each saying. At the top left a receiving
+horn under a small globe takes in short message slips from every direction. The
+slips drop through a sorting drum that reads the sender's home tag and throws
+nearly all of them into a wide hopper marked for the world, and a few into a
+small hopper marked for the city. From each hopper a counting mechanism tallies
+the words on the slips and pushes the commonest ones up as pegs on a column,
+and the two columns stand side by side at the centre of the sheet, tall, each a
+ladder of word pegs from the most used at the top down, the world's column
+broad and the city's narrow. A comparing bar runs between them, lining up the
+same word at different heights. At the right a small printing press strikes the
+two columns onto one card for the reader. The one word peg that stands at the
+top of the city's column and low on the world's, and the comparing bar between
+them, are the one element traced in the accent."""
+press = """The same summit as reported from everywhere. At the top of the sheet a
+map of the world on a roller, with threads running down from many countries to
+a line of hooks, and on each hook a newspaper page as it arrives. A clipping
+machine at the centre left cuts from each page the column that reports the
+summit and stamps it with its country. The clippings run on a belt to a wide
+board that fills the centre and right of the sheet, pinned into columns, one
+per country, each column the same two days of the summit told from a different
+place, with the country's stamp at the head. A reading carriage on a rail runs
+across the board so a reader can set any two columns beside each other. At the
+far left, small and fixed, the summit itself: a round table under a flag. One
+country's column on the board, and the thread that brought it from the map,
+are the one element traced in the accent."""
+
+[projects.searchminutes]
+subject = """A meeting made into a record: a council table with a microphone, a
+waveform running from it into a transcript, and the transcript into an indexed
+column of searchable entries, one line of speech traced all the way through."""
+
+[projects.searchminutes.alt]
+# Written for the workshop direction: what the machine does. It listens to a recording
+# of a public meeting, writes the speech down, and files the words so that one
+# sentence can be found again. Four or five parts, each big enough to read.
+clerk = """A machine that takes down a meeting and files it. At the left a reel of
+recorded speech unwinds past a listening horn; the horn drives a reed and a
+galvanometer needle whose swing is read off by a small bank of relays. The relays
+work a typing carriage that prints the speech as a continuous strip of paper issuing
+to the right. The strip passes under a guillotine that cuts it into short slips, and
+a sorting arm drops each slip into its pigeonhole in a tall card index at the right
+end of the sheet. One line of speech, from the reel through the horn and the carriage
+to its slip in the index, is the one element traced in the accent."""
+index = """The index as the machine: a large revolving drum of filed slips at the
+centre of the sheet, every slip a short run of printed speech from some meeting,
+drawn as a drum in section with its slips in rows. To the left, smaller, the
+transcribing instrument that fills it, a reel of recorded speech, a listening horn,
+and a typing carriage feeding slips onto the drum by a belt. To the right a reading
+desk with a single lever: the lever turns the drum, a finder arm drops onto one slip,
+and that slip is drawn out and laid flat on the desk. The finder's path from the
+lever to the one slip is the one element traced in the accent."""
+
+[projects.sensorgrid]
+subject = """A solar-powered air-quality node drawn as an exploded assembly: solar
+panel, enclosure, microcontroller board, particulate sensor and antenna stacked in
+section, with radio arcs leaving the antenna toward a small gateway and a dashboard
+trace beyond it."""
+
+[projects.sensorgrid.alt]
+# Written for the workshop direction: what the machine does, not its parts list.
+# A sensor node is a small instrument that breathes air, counts what is in it, and
+# sends the count by radio; the network is many of them reporting to one place.
+station = """A small unattended instrument that samples the air and reports what it
+finds. A tilted sail of solar cells on a mast feeds a jar battery; that drives a
+bellows which draws outside air through an intake horn into a narrow counting chamber,
+where a lamp and a photocell across the stream register the dust. The count is
+punched onto a short run of tape and keyed out through a wire antenna, drawn as a few
+radio arcs leaving to the right toward a second, smaller receiving instrument that
+logs the trace on a moving paper chart. The air's path, from intake horn to counting
+chamber, is the one element traced in the accent."""
+grid = """A network of identical small air-sampling stations across a stretch of
+ground, drawn as a row in the middle band: each one a mast with a tilted sail of
+solar cells, a bellows, and a short wire antenna, the nearer ones drawn fully and the
+farther ones ghosted. Radio arcs from every station converge on a single larger
+receiving machine at the right, where the readings are punched to tape, sorted, and
+plotted as one chart on a cathode-ray screen. The converging radio paths are the one
+element traced in the accent."""
+
+[projects.socialcontext-open]
+subject = """Classification by description rather than by category: a short handwritten
+line at the top, a fan of web pages beneath it, and only the pages that match lit and
+connected back to the line, each with a small excerpt flagged as the reason."""
+
+[projects.socialcontext-open.alt]
+# Description as an instrument rather than a filing system. Each alternate is a
+# different reading of the same idea; candidates are named blueprint-<alt>-<n>.
+lens = """A description as a lens: one freehand stroke, the shape of a line of
+handwriting but with no letters in it, passes through a large optical lens drawn in
+section, and on the far side a wide field of many small identical page-tiles, most
+faint, with the few that fall inside the focused beam drawn bright and tied to the
+beam in the accent."""
+sieve = """The open web narrowed in stages: a broad field of many small page-tiles at
+the left pours through a coarse grating into a narrower band, then through a fine
+grating, until a handful remain at the right, each of those holding a single short
+line of text drawn as a bar and the bar traced in the accent as the reason it was
+kept."""
+freehand = """In place of a fixed taxonomy: a rigid cabinet of empty pigeonholes drawn
+faint and set to one side, and in front of it one confident freehand curve, the shape
+of a line of handwriting with no letters in it, sweeping across a loose scatter of
+page-tiles and gathering only the ones it passes through, the curve and the gathered
+tiles traced in the accent."""
+curve = """A drafting instrument for any shape rather than a fixed set: a row of standard
+drafting templates, circles and squares cut from a card, set to one side and drawn
+faint, and in front of them one large French curve laid over a dense field of small
+identical page-tiles. The pages that lie under the sweep of the curve's edge are drawn
+bright and traced in the accent; the rest stay faint. The curve itself is drawn as an
+instrument, with its centre line and construction arcs."""
+detail = """The plate convention for showing exactly where and why: a loose field of
+small page-tiles, one of them circled with a fine leader running to a large detail
+circle at the right, an enlargement of that page in which one line of its text, drawn
+as a bar, is traced in the accent with a dimension tick across it. The rest of the
+page in the enlargement stays pale grey."""
+prism = """The whole open web as one broad beam of parallel rays entering a triangular
+prism drawn in section with its angles constructed, and on the far side the beam
+spread into a fan of faint bands, with one narrow band traced in the accent landing
+on a short row of small page-tiles that are drawn bright. The prism's face carries a
+single freehand stroke, the shape of handwriting with no letters."""
+lens2 = """A single thin biconvex lens drawn as a pure geometric construction, two
+arcs and their centres marked, with the optical axis, focal points and ray tracing
+drawn the way an optics textbook figure is drawn. The object, at the left, is one
+freehand stroke, the shape of a line of handwriting with no letters in it; the image,
+at the right, is a short row of small page-tiles drawn bright, within a larger field
+of faint ones. The converging rays from lens to image are traced in the accent. No
+lens barrel, no mount, no mechanical housing of any kind."""
+
+[projects.overstory]
+subject = """The news as a long story rather than a feed: many short lines of coverage
+gathered into one continuous arc that runs across the sheet, its thickness rising
+and falling like a pulse, with a few older arcs drawn faintly beneath it as the
+precedents it echoes, and one point on the present arc tied back to them in the
+accent."""
+
+[projects.overstory.alt]
+# The same idea drawn as a plotted record rather than a general arrangement: the
+# workshop sheet's convention for a thing that reads signals over time. The
+# instrument that made the trace is small and at one end; the trace is the drawing.
+trace = """A long strip of recorder paper unrolled across the sheet and pinned flat,
+drawn as a chart recorder would leave it: a continuous inked arc running its full
+length, its amplitude rising and falling like a pulse, with two or three earlier arcs
+plotted faintly beneath it on the same strip as the precedents it echoes. At the
+left end only, the small clockwork chart recorder that drew it, a drum, a pen arm, a
+spring and a few gears, drawn as a mechanism in section with its pen still touching
+the strip. Fine ruled graduations along the strip's edge as a draftsman would plot
+them, no numerals. One point on the present arc is marked in the accent and tied by
+a short leader line down to the faint arcs beneath it. The strip and its arcs are
+the drawing; the recorder is a detail at one end, not the subject."""
+
+# ---------------------------------------------------------------- site plates
+# Drawings that belong to the site rather than to a project. The same direction
+# applies; they promote to static/images/<name>.webp and a template points at them.
+
+[site.sheet-00]
+subject = """The general arrangement drawing for a body of engineering work that runs
+from the physical world to language: at one end an instrument sensing the air and the
+open, in the middle the machinery that gathers and indexes public records and news,
+at the other end written language taken apart into structure. Drawn as one
+continuous assembly, abstract and emblematic rather than any particular device or
+screen, with a single signal traced in the accent passing through all three. It
+should read as themes, not as a catalogue of parts."""

@@ -1,0 +1,1906 @@
+/* IBM Plex — self-hosted, SIL Open Font License. See /fonts/LICENSE.txt */
+@font-face {
+    font-family: 'IBM Plex Sans';
+    src: url('/fonts/IBMPlexSans-400.woff2') format('woff2');
+    font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'IBM Plex Sans';
+    src: url('/fonts/IBMPlexSans-600.woff2') format('woff2');
+    font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'IBM Plex Mono';
+    src: url('/fonts/IBMPlexMono-400.woff2') format('woff2');
+    font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'IBM Plex Mono';
+    src: url('/fonts/IBMPlexMono-600.woff2') format('woff2');
+    font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'IBM Plex Serif';
+    src: url('/fonts/IBMPlexSerif-400.woff2') format('woff2');
+    font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'IBM Plex Serif';
+    src: url('/fonts/IBMPlexSerif-400-italic.woff2') format('woff2');
+    font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+    font-family: 'IBM Plex Serif';
+    src: url('/fonts/IBMPlexSerif-600.woff2') format('woff2');
+    font-weight: 600; font-style: normal; font-display: swap;
+}
+
+:root {
+    --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --font-serif: 'IBM Plex Serif', Georgia, 'Times New Roman', serif;
+
+    /* Colour. Every chrome colour on the site comes from this scale; nothing
+       below hard-codes a grey. The Socialcontext Open block carries the
+       product's own palette and is the one exception. */
+    --primary-red: #e63946;
+    --accent-soft: #f5bcc0;
+    --text-dark: #1c1c1c;
+    --ink-2: #3d3d3d;
+    --ink-3: #4f4f4f;
+    --ink-4: #6a6a6a;
+    --label: #6e737b;
+    --text-light: #a3a7ad;
+    --tick: #b4b8be;
+    --rule: #cfd2d6;
+    --hairline: #dcdfe3;
+    --bg-off-white: #f5f6f7;
+    --bg-light: #ffffff;
+    --paper-raised: #ffffff;
+    /* The sheet a drawn plate is washed to by tools/images.py (PAPER there);
+       the title block under a plate is set on the same paper. */
+    --paper: #f0ede6;
+}
+
+/* Registration marks: four corner ticks outside a frame, the way a plate is
+   marked for trimming. One pseudo-element carries all eight ticks as
+   gradients, so the frame keeps its own box and nothing in the markup knows.
+   A frame that takes these must not clip overflow. */
+@mixin registration($out: 14px, $len: 10px) {
+    position: relative;
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: -#{$out};
+        pointer-events: none;
+        $t: linear-gradient(var(--tick), var(--tick));
+        /* Interpolated: a bare slash between two lengths is division in Sass. */
+        background:
+            $t left 0 top #{$out} / #{$len} 1px no-repeat,
+            $t left #{$out} top 0 / 1px #{$len} no-repeat,
+            $t right 0 top #{$out} / #{$len} 1px no-repeat,
+            $t right #{$out} top 0 / 1px #{$len} no-repeat,
+            $t left 0 bottom #{$out} / #{$len} 1px no-repeat,
+            $t left #{$out} bottom 0 / 1px #{$len} no-repeat,
+            $t right 0 bottom #{$out} / #{$len} 1px no-repeat,
+            $t right #{$out} bottom 0 / 1px #{$len} no-repeat;
+    }
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Running text is set in the serif: anything a reader reads as prose rather
+   than as a label, a title, or a control. Titles, navigation, meta lines, and
+   the filter row stay in the sans; labels stay in the mono. The three faces
+   are one family, so the page keeps one voice. */
+.content,
+.pub-body,
+.hero-desc,
+.section-description,
+.page-subtitle,
+.xp-reading,
+.cap-detail,
+.proj-sel-desc,
+.proj-row-desc {
+    font-family: var(--font-serif);
+}
+
+body {
+    font-family: var(--font-sans);
+    color: var(--text-dark);
+    line-height: 1.6;
+    background: var(--bg-light);
+}
+
+/* Navigation. Scoped to the site header: the breadcrumb is also a <nav>
+   landmark and must not inherit the header's chrome. */
+.site-nav {
+    padding: 2rem 0;
+    background-color: var(--bg-light);
+    border-bottom: 1px solid var(--hairline);
+
+    /* The header runs on the same column as the page under it, so the wordmark
+       and the first line of a page share a left edge at every width. */
+    .nav-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        a {
+            text-decoration: none;
+        }
+
+        /* Block, so the mark is not sitting on a text baseline with a
+           descender's worth of empty space beneath it. With the viewBox cropped
+           to the ink, centring the box centres the letters. */
+        svg {
+            display: block;
+        }
+    }
+
+    .main-nav {
+        ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+                margin-left: 1.5rem;
+
+                a {
+                    text-decoration: none;
+                    color: var(--text-dark);
+                    font-weight: 500;
+                    transition: color 0.3s ease;
+
+                    &:hover {
+                        color: var(--primary-red);
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Hero section: headline, a short description, and under them Sheet 00,
+   the site's own plate. It takes the same frame as every project plate --
+   hairline on the off-white tint, registration marks, 2:1 -- at the width
+   of the text above it. */
+.hero {
+    padding: 3.5rem 2rem 3rem;
+    background-color: var(--bg-off-white);
+
+    .hero-text {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+
+        h1 {
+            font-size: 3rem;
+            line-height: 1.15;
+            margin-bottom: 1.25rem;
+            color: var(--text-dark);
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            line-height: 1.65;
+            color: var(--ink-2);
+            max-width: 42rem;
+
+            p { margin-bottom: 0.9rem; }
+
+            a {
+                color: var(--primary-red);
+                text-decoration: none;
+                border-bottom: 1px solid var(--accent-soft);
+
+                &:hover { border-bottom-color: var(--primary-red); }
+            }
+        }
+
+        /* Sheet 00 sits at the width of the text above it; the frame and
+           title block are the shared .sheet below. */
+        .hero-plate { margin: 2.5rem 0 0; }
+    }
+}
+
+/* Logo dot — CSS rather than a CDN animation library */
+.bouncing-dot {
+    animation: dot-bounce 1.6s ease-in-out infinite;
+}
+
+@keyframes dot-bounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bouncing-dot { animation: none; }
+}
+
+/* Projects section */
+.projects {
+    padding: 8rem 5%;
+    background: var(--bg-light);
+}
+
+/* ---------------------------------------------------------------
+   Page header — one treatment for section indexes, taxonomy terms
+   and detail pages alike. The breadcrumb says where you are, the
+   rule closes the header, and the red lead segment is the only
+   accent. Red sits on the rule and never on the label: red text on
+   this site means a link, and the eyebrow is not one.
+
+   Every page opens the same way: a .page-header section carrying the
+   off-white tint edge to edge, with a .container.page-head inside it
+   holding the crumb, the title, and the page's own second line. The
+   body follows on white (.page-content, .pub-section, .xp below).
+   --------------------------------------------------------------- */
+.page-head h1 {
+    font-size: clamp(1.75rem, 1.1rem + 1.7vw, 2.25rem);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--text-dark);
+    padding-bottom: 1.05rem;
+    border-bottom: 1px solid var(--hairline);
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -1px;
+        width: 56px;
+        height: 1px;
+        background: var(--primary-red);
+    }
+}
+
+/* Everything under the rule — descriptions, subtitles, author lines —
+   starts at the same distance from it. */
+.page-head .section-description,
+.page-head .page-subtitle,
+.page-head .pub-authors {
+    margin-top: 1.05rem;
+}
+
+/* Breadcrumb. Same mono label styling as the facts rail on a project page, the
+   site's other "where this belongs" marker. */
+.crumb {
+    margin-bottom: 0.8rem;
+
+    ol {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: var(--label);
+    }
+
+    li + li::before {
+        content: '/';
+        opacity: 0.45;
+        margin: 0 0.45rem;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+
+        &:hover { color: var(--primary-red); border-bottom-color: var(--primary-red); }
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* The header band. Every page opens the way the home page does: title,
+   breadcrumb, and a line of description on the off-white tint, the body on
+   white under it, the footer on the tint again. One class for section
+   indexes and detail pages alike, so the band is the same height and tone
+   wherever a reader lands. */
+.page-header {
+    padding: 3rem 0 2.5rem;
+    background-color: var(--bg-off-white);
+
+    .section-description {
+        max-width: 46rem;
+        margin: 1.05rem 0 0;
+        color: var(--ink-3);
+        line-height: 1.6;
+    }
+
+    .page-subtitle {
+        font-size: 1.25rem;
+        color: var(--ink-3);
+        font-weight: normal;
+        margin-top: 1.05rem;
+    }
+
+    /* A project page's header also holds its drawn sheet. The bottom padding
+       leaves room for the sheet's corner ticks, which fall outside its frame. */
+    &--sheet {
+        padding-bottom: 3rem;
+
+        .sheet { margin-top: 2.5rem; }
+    }
+}
+
+/* The body under the band: the same top clearance on every page, whether
+   the body is prose, a reference list, or the experience chapters. */
+.page-content,
+.pub-section,
+.xp {
+    padding: 2.5rem 0 5rem;
+}
+
+/* ---------------------------------------------------------------
+   Detail page body. The text runs in the same reading measure as
+   every other page, and a project carries its facts in a rail beside
+   it: plate number, year, place, setting, each from the one place it
+   is recorded. On a wide screen the rail sits to the right and stays
+   put while the text scrolls; on a narrow one it comes first, as a
+   short block above the text.
+
+   A project page has three dark or red accents and no more, each with
+   its own job: the band under the plate closes the drawing, the plate
+   number in red opens the rail, and a red initial opens the text.
+   Nothing is said in two of them.
+   --------------------------------------------------------------- */
+.page-body {
+    max-width: 46rem;
+
+    &--project {
+        max-width: none;
+        display: grid;
+        grid-template-columns: minmax(0, 46rem) 14rem;
+        justify-content: space-between;
+        column-gap: 3rem;
+        align-items: start;
+
+        .content > p:first-of-type::first-letter {
+            float: left;
+            font-family: var(--font-serif);
+            font-weight: 600;
+            font-size: 3.9rem;
+            line-height: 0.8;
+            padding: 0.38rem 0.5rem 0 0;
+            color: var(--primary-red);
+        }
+    }
+}
+
+.facts {
+    position: sticky;
+    top: 2rem;
+    padding-top: 0.6rem;
+    border-top: 2px solid var(--text-dark);
+
+    dl {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        gap: 0.55rem 1.25rem;
+        padding-top: 0.9rem;
+        font-size: 0.86rem;
+        line-height: 1.5;
+    }
+
+    dt {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: var(--label);
+        padding-top: 0.2rem;
+    }
+
+    dd {
+        margin: 0;
+        color: var(--text-dark);
+    }
+
+    /* The plate number takes the whole width of the rail, large and in
+       the site's red, with its label on the line above. */
+    dt:first-of-type {
+        grid-column: 1 / -1;
+        padding-top: 0;
+    }
+
+    dd.facts__plate {
+        grid-column: 1 / -1;
+        font-family: var(--font-mono);
+        font-size: 3.4rem;
+        line-height: 1;
+        font-weight: 500;
+        color: var(--primary-red);
+        padding: 0 0 0.9rem;
+        margin-top: -0.3rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .page-body--project {
+        grid-template-columns: minmax(0, 46rem);
+        justify-content: start;
+    }
+
+    .facts {
+        order: -1;
+        position: static;
+        margin-bottom: 2.25rem;
+        border-top: 0;
+        border-bottom: 1px solid var(--hairline);
+        padding: 0 0 1rem;
+
+        dl { padding-top: 0; }
+    }
+}
+
+.content {
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: var(--text-dark);
+
+    /* Subheads are titles, so they stay in the sans like every other title. */
+    h2, h3 {
+        font-family: var(--font-sans);
+        font-weight: 600;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+        margin: 2.5rem 0 0.75rem;
+    }
+
+    h3 {
+        font-size: 1.02rem;
+        margin: 2rem 0 0.5rem;
+    }
+
+    h2:first-child,
+    h3:first-child { margin-top: 0; }
+
+    p, ul, ol {
+        margin-bottom: 1.25rem;
+    }
+
+    ul, ol {
+        padding-left: 1.5rem;
+    }
+
+    li {
+        margin-bottom: 0.4rem;
+    }
+
+    /* A link in running text is marked the way the publication pages
+       mark one, so red stays for the accent and the hover. A colleague's
+       name has its own quieter treatment (see .person below), and the
+       Socialcontext Open block is the product's own page, with its own
+       buttons and wordmark, so its links are left to it (see .sc-open). */
+    a:not(.person, .sc-open *) {
+        color: var(--text-dark);
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 2px;
+        text-decoration-color: var(--tick);
+
+        &:hover { color: var(--primary-red); text-decoration-color: var(--primary-red); }
+    }
+
+    pre {
+        background: var(--bg-off-white);
+        border: 1px solid var(--hairline);
+        border-left: 2px solid var(--primary-red);
+        padding: 1rem 1.15rem;
+        margin-bottom: 1.5rem;
+        overflow-x: auto;
+        line-height: 1.65;
+
+        code { font-size: 0.85rem; }
+    }
+}
+
+/* Footer */
+footer {
+    background-color: var(--bg-off-white);
+    padding: 2rem 0;
+    text-align: center;
+    color: var(--ink-3);
+    border-top: 1px solid var(--hairline);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .site-nav {
+        padding: 1.5rem 0;
+
+        .nav-inner {
+            flex-direction: column;
+        }
+
+        .logo {
+            margin-bottom: 1rem;
+        }
+
+        .main-nav ul {
+            flex-wrap: wrap;
+            justify-content: center;
+
+            li {
+                margin: 0.5rem;
+            }
+        }
+    }
+
+}
+
+/* Responsive adjustments for hero */
+@media (max-width: 992px) {
+    .hero {
+        padding: 4rem 1rem 3rem;
+
+        .hero-text h1 { font-size: 2.5rem; }
+    }
+}
+/* ---------------------------------------------------------------
+   Publications
+   A reference list, not a card grid: no imagery, tight vertical
+   rhythm, hairline separators. Reads like a CV section.
+   --------------------------------------------------------------- */
+
+.pub-list {
+    list-style: none;
+    max-width: 46rem;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--hairline);
+}
+
+.pub {
+    padding: 1.75rem 0;
+    border-bottom: 1px solid var(--hairline);
+}
+
+.pub-title {
+    font-size: 1.25rem;
+    line-height: 1.35;
+    margin: 0 0 0.5rem;
+    font-weight: 700;
+
+    a {
+        color: var(--text-dark);
+        text-decoration: none;
+        border-bottom: 2px solid transparent;
+        transition: border-color 0.15s ease, color 0.15s ease;
+    }
+
+    a:hover {
+        color: var(--primary-red);
+        border-bottom-color: var(--primary-red);
+    }
+}
+
+.pub-authors {
+    font-size: 0.9rem;
+    color: var(--ink-2);
+    margin: 0 0 0.35rem;
+
+    strong {
+        color: var(--text-dark);
+    }
+}
+
+.pub-venue {
+    font-size: 0.85rem;
+    color: var(--ink-4);
+    margin: 0;
+
+    cite {
+        font-style: italic;
+    }
+}
+
+.pub-meta {
+    margin: 0.5rem 0 0;
+}
+
+/* A second group on the publications page, such as grant proposals: the
+   same reference-list shape, set smaller and tighter, since these entries
+   have no page of their own. */
+.pub-group {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--label);
+    margin: 2.5rem 0 0.6rem;
+}
+
+.pub-list--thin {
+    .pub { padding: 1rem 0; }
+    .pub-title { font-size: 1rem; margin-bottom: 0.3rem; }
+    .pub-authors { font-size: 0.85rem; margin-bottom: 0.2rem; }
+}
+
+.pub-doi {
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-4);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+
+    &:hover {
+        color: var(--primary-red);
+        border-bottom-color: var(--primary-red);
+    }
+}
+
+/* Single publication or credential page: the header band above, the
+   citation block opening the body, then the text. */
+.pub-citation {
+    display: grid;
+    grid-template-columns: minmax(7rem, max-content) 1fr;
+    gap: 0.45rem 1.5rem;
+    margin: 0 0 2.5rem;
+    padding: 0 0 1.25rem;
+    border-bottom: 1px solid var(--hairline);
+    font-size: 0.88rem;
+
+    dt {
+        color: var(--label);
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding-top: 0.15rem;
+    }
+
+    dd {
+        margin: 0;
+        color: var(--ink-2);
+    }
+
+    a {
+        color: var(--text-dark);
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 2px;
+
+        &:hover { color: var(--primary-red); }
+    }
+}
+
+.pub-body p {
+    margin-bottom: 1.15rem;
+}
+
+@media (max-width: 600px) {
+    .pub-citation {
+        grid-template-columns: 1fr;
+        gap: 0.15rem;
+
+        dd { margin-bottom: 0.75rem; }
+    }
+}
+
+/* ---------------------------------------------------------------
+   Organization logos
+   Wordmarks of wildly different proportions (a 262x119 raster, a
+   1920x162 banner, a squarish mark). Constrain by height so they
+   sit on a common optical baseline rather than a common width.
+   --------------------------------------------------------------- */
+
+.org-logo {
+    display: block;
+    height: auto;
+    max-height: 64px;
+    max-width: min(100%, 320px);
+    width: auto;
+    margin: 0 0 2rem;
+    object-fit: contain;
+}
+
+@media (max-width: 600px) {
+    .org-logo {
+        max-height: 48px;
+    }
+}
+
+/* Footer links */
+.footer-links {
+    margin-bottom: 0.5rem;
+
+    a {
+        color: var(--text-dark);
+        text-decoration: none;
+        margin: 0 0.75rem;
+        border-bottom: 1px solid var(--rule);
+
+        &:hover { color: var(--primary-red); border-bottom-color: var(--primary-red); }
+    }
+}
+
+/* ---------------------------------------------------------------
+   Homepage blocks (front door, not an index of the nav)
+   --------------------------------------------------------------- */
+
+/* A section label: mono, uppercase, with a rule running out to the right
+   margin. Shared by the homepage blocks and the tiers of /projects/, so both
+   pages open a block the same way. Vertical space is the caller's -- a tier
+   boundary needs more air above it than a block on the front door. */
+.rule-label {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--label);
+    margin-bottom: 1.6rem;
+
+    /* The rule finishes the line, so a count sits against something, and it
+       ends in a tick the way a dimension line does. The label is the other
+       terminal, so the tick is on the right only. */
+    &::after {
+        content: "";
+        flex: 1;
+        height: 7px;
+        align-self: center;
+        background:
+            linear-gradient(var(--hairline), var(--hairline)) left center / 100% 1px no-repeat,
+            linear-gradient(var(--tick), var(--tick)) right center / 1px 7px no-repeat;
+    }
+
+    b { color: var(--primary-red); font-weight: 400; }
+}
+
+.rule-label--tier { padding-top: 4rem; }
+
+/* A group heading inside a reference list (the credentials page): the same
+   label, stopped where the list stops, with air above all but the first. */
+.rule-label--group {
+    max-width: 46rem;
+    font-weight: 400;
+    margin-top: 0;
+    padding-top: 3rem;
+
+    &:first-child { padding-top: 0; }
+}
+
+.capabilities {
+    padding: 3rem 0 1rem;
+
+    /* The rule stops where the list stops, so it measures the block rather
+       than the page. */
+    .rule-label { max-width: 60rem; }
+}
+
+.cap-list {
+    display: grid;
+    grid-template-columns: minmax(9rem, max-content) 1fr;
+    gap: 1.4rem 2rem;
+    margin: 0;
+    max-width: 60rem;
+
+    dt {
+        font-weight: 700;
+        color: var(--text-dark);
+        padding-top: 0.1rem;
+    }
+
+    dd {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+}
+
+.cap-detail {
+    color: var(--ink-2);
+}
+
+.cap-work {
+    font-size: 0.85rem;
+
+    a {
+        color: var(--ink-4);
+        text-decoration: none;
+        border-bottom: 1px solid var(--rule);
+
+        &:hover { color: var(--primary-red); border-bottom-color: var(--primary-red); }
+    }
+}
+
+.selected-work {
+    padding: 3rem 0 4rem;
+}
+
+.block-more {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+
+    a {
+        color: var(--text-dark);
+        text-decoration: none;
+        border-bottom: 2px solid var(--primary-red);
+
+        &:hover { color: var(--primary-red); }
+    }
+}
+
+@media (max-width: 640px) {
+    .cap-list {
+        grid-template-columns: 1fr;
+        gap: 0.35rem 0;
+
+        dd { margin-bottom: 1.25rem; }
+    }
+}
+
+
+/* ---------------------------------------------------------------
+   Mono is an accent: navigation, labels, identifiers, code.
+   Body copy is set in the text face.
+   --------------------------------------------------------------- */
+
+.main-nav,
+.rule-label,
+.cap-label,
+.pub-doi,
+.pub-citation dt,
+footer,
+code, pre, kbd, samp {
+    font-family: var(--font-mono);
+}
+
+.main-nav a { font-size: 0.92rem; }
+
+code, pre, kbd, samp {
+    font-size: 0.92em;
+}
+
+/* ---------------------------------------------------------------
+   Branded byline — words separated by the logo's red dot, static.
+   --------------------------------------------------------------- */
+
+.byline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    margin-top: 0.85rem;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--ink-2);
+    letter-spacing: 0.01em;
+}
+
+.byline-word {
+    white-space: nowrap;
+}
+
+.byline-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--primary-red);
+    margin: 0 0.7rem;
+    flex: 0 0 auto;
+    position: relative;
+    top: -0.15em;
+}
+
+@media (max-width: 480px) {
+    .byline { font-size: 1.05rem; }
+    .byline-dot { margin: 0 0.5rem; }
+}
+
+/* Capability work item with no page of its own yet */
+.cap-plain { color: var(--label); }
+
+/* A mark in the body copy: a project wordmark or an organisation's logo,
+   small and unframed, sized so it reads as a mark and not as a figure.
+   A strip (a project's own window chrome, say) is only legible at full
+   size, so it takes the column's width and its own height, closed by a
+   hairline. */
+.mark {
+    display: block;
+    width: auto;
+    height: auto;
+    max-height: 5rem;
+    max-width: min(100%, 18rem);
+    margin: 0 0 1.75rem;
+
+    &--strip {
+        max-height: none;
+        max-width: 100%;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--hairline);
+    }
+}
+
+/* The logo at the top of an experience page: the same bounded frame as the
+   selected grid, a hairline on the off-white tint with registration marks,
+   and no radius or shadow -- the plates are flat and so is everything around
+   them. The logo keeps its own height. A project's plate is a .sheet in the
+   page header instead, below. */
+.page-content .featured-image {
+    margin-bottom: 2rem;
+    background: var(--bg-off-white);
+    border: 1px solid var(--hairline);
+    @include registration;
+
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* A drawn sheet: the 2:1 picture and its title block in one frame, bordered
+   in ink rather than a hairline so it reads as a drawing, with the corner
+   ticks enclosing both. The home page's Sheet 00 and every project plate
+   take this one frame. */
+.sheet {
+    background: var(--bg-off-white);
+    border: 1px solid var(--text-dark);
+    @include registration;
+
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 2 / 1;
+        object-fit: cover;
+    }
+}
+
+/* The title block under a sheet, drawn the way a drafting sheet
+   carries one: a row of ruled cells on the paper, a small caption at the
+   top of each cell and the entry under it, a heavy rule above and below
+   with a fine rule inside the top one. The weight comes from the lines,
+   not from a fill. */
+.plate-band {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    background: var(--paper);
+    color: var(--text-dark);
+    border-top: 2px solid var(--text-dark);
+    border-bottom: 2px solid var(--text-dark);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.25;
+
+    /* The fine inner rule under the heavy top one. */
+    &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 3px;
+        height: 1px;
+        background: var(--text-dark);
+        pointer-events: none;
+    }
+
+    &__cell {
+        padding: 0.7rem 0.9rem 0.5rem;
+        border-right: 1px solid var(--text-dark);
+        white-space: nowrap;
+
+        &:last-child { border-right: 0; }
+        &--title { flex: 1; min-width: 0; font-weight: 600; font-size: 1rem; }
+        &--drawn { color: var(--ink-3); }
+    }
+
+    &__label {
+        display: block;
+        font-size: 0.56rem;
+        letter-spacing: 0.12em;
+        color: var(--ink-4);
+        margin-bottom: 0.15rem;
+    }
+}
+
+@media (max-width: 700px) {
+    .plate-band {
+        flex-wrap: wrap;
+
+        &__cell--title { flex-basis: 100%; border-right: 0; border-bottom: 1px solid var(--text-dark); }
+        &__cell:not(.plate-band__cell--title) { flex: 1; white-space: normal; }
+    }
+}
+
+
+/* Inline content images should never upscale past their natural size either */
+.content img,
+.pub-body img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ---------------------------------------------------------------
+   Body figures. A step quieter than the plate: a hairline on the
+   off-white ground with the picture at its own aspect inside, never
+   upscaled, its height capped so a tall capture or a square photograph
+   does not run the page. Under the frame, a counted FIG. label in the
+   title block's voice and the caption. The counter restarts per page.
+   --------------------------------------------------------------- */
+.content { counter-reset: fig; }
+
+.figure {
+    margin: 1.75rem 0 2rem;
+    counter-increment: fig;
+
+    &__frame {
+        display: flex;
+        justify-content: center;
+        padding: 1rem;
+        background: var(--bg-off-white);
+        border: 1px solid var(--hairline);
+
+        img {
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 30rem;
+            object-fit: contain;
+        }
+    }
+
+    figcaption {
+        margin-top: 0.65rem;
+        font-size: 0.86rem;
+        line-height: 1.55;
+        color: var(--label);
+
+        &::before {
+            content: "Fig. " counter(fig);
+            margin-right: 0.7rem;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--text-dark);
+        }
+    }
+}
+
+/* ---------------------------------------------------------------
+   People. A named colleague is a link to their profile, opened in a
+   new tab, with a hover card carrying a one-line bio. The name is
+   marked only by a dotted hairline, so running text stays quiet;
+   the card is the same frame as everything else (hairline, off-white).
+   On a narrow screen the card pins to the bottom of the viewport
+   instead of hanging off the name.
+   --------------------------------------------------------------- */
+
+.person {
+    position: relative;
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--tick);
+
+    &:hover, &:focus-visible {
+        color: var(--primary-red);
+        border-bottom-color: var(--primary-red);
+    }
+
+    .person-card {
+        display: none;
+        position: absolute;
+        left: 0;
+        top: calc(100% + 0.5rem);
+        z-index: 20;
+        width: 22rem;
+        max-width: calc(100vw - 2rem);
+        padding: 0.8rem 1rem 0.9rem;
+        background: var(--bg-off-white);
+        border: 1px solid var(--hairline);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        color: var(--text-dark);
+        font-family: var(--font-sans);
+        font-weight: 400;
+        font-size: 0.85rem;
+        line-height: 1.5;
+        text-align: left;
+        white-space: normal;
+        cursor: default;
+        grid-template-columns: 2.75rem 1fr;
+        column-gap: 0.8rem;
+        align-items: start;
+
+        /* The photo, or a monogram where there is none. Spans the rows. */
+        .person-face {
+            grid-row: 1 / span 3;
+            width: 2.75rem;
+            height: 2.75rem;
+            overflow: hidden;
+            border: 1px solid var(--hairline);
+            background: var(--hairline);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            letter-spacing: 0.04em;
+            color: var(--label);
+
+            img {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        b {
+            display: block;
+            margin-bottom: 0.2rem;
+            font-weight: 600;
+        }
+
+        .person-bio { display: block; }
+
+        i {
+            display: block;
+            margin-top: 0.5rem;
+            font-family: var(--font-mono);
+            font-style: normal;
+            font-size: 0.7rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--label);
+        }
+    }
+
+    &:hover .person-card,
+    &:focus-visible .person-card {
+        display: grid;
+    }
+
+    .person-card.flip {
+        left: auto;
+        right: 0;
+    }
+}
+
+/* A bold or heading context must not leak into the card. */
+strong .person-card, b .person-card, h2 .person-card, h3 .person-card {
+    font-weight: 400;
+}
+
+@media (max-width: 600px) {
+    .person .person-card {
+        position: fixed;
+        left: 1rem;
+        right: 1rem;
+        top: auto;
+        bottom: 1rem;
+        width: auto;
+        max-width: none;
+    }
+}
+
+/* A team roster on an experience page (data/teams.toml): the groups the
+   organization used, each a run of names set as a wrapped list, so a
+   roster of thirty reads as a paragraph rather than a column. Names with
+   a profile are .person links; the rest are plain. */
+.team {
+    margin-top: 2.5rem;
+
+    h3 {
+        margin-bottom: 0.3rem;
+    }
+
+    .team__list {
+        list-style: none;
+        margin: 0 0 1.2rem;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 1.4rem;
+        row-gap: 0.3rem;
+
+        li { margin: 0; }
+    }
+
+    .team__source {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--label);
+    }
+}
+
+/* ---------------------------------------------------------------
+   Socialcontext Open: the product's own front page, as a working
+   block instead of a screenshot. Same frame as the plates (hairline
+   on the off-white tint), the product's copy and colours, the site's
+   type. Both buttons go to the live application.
+   --------------------------------------------------------------- */
+
+.content .sc-open {
+    --sc-red: #ff4a3a;
+    --sc-navy: #1f2a3c;
+    --sc-slate: #4b5563;
+    margin: 0 0 2rem;
+    padding: 1.75rem 2rem 2rem;
+    background: var(--bg-off-white);
+    border: 1px solid var(--hairline);
+    line-height: 1.5;
+
+    &__brand {
+        display: inline-flex;
+        flex-direction: column;
+        line-height: 1;
+        text-decoration: none;
+        margin-bottom: 1.75rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--hairline);
+        width: 100%;
+    }
+
+    &__wordmark {
+        font-size: 1.35rem;
+        letter-spacing: 0.01em;
+        color: var(--sc-red);
+        text-transform: uppercase;
+        font-weight: 300;
+
+        b { font-weight: 700; }
+    }
+
+    &__product {
+        margin-top: 0.3rem;
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--sc-slate);
+    }
+
+    &__headline {
+        margin: 0 0 1rem;
+        font-size: 1.75rem;
+        line-height: 1.2;
+        font-weight: 700;
+        color: var(--sc-navy);
+
+        em {
+            display: block;
+            font-style: normal;
+            color: var(--sc-red);
+        }
+    }
+
+    &__pitch {
+        max-width: 36rem;
+        margin: 0 0 1.5rem;
+        color: var(--sc-slate);
+    }
+
+    &__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin: 0;
+    }
+
+    &__btn {
+        display: inline-block;
+        padding: 0.6rem 1.2rem;
+        border: 1px solid #cfd3d8;
+        border-radius: 6px;
+        background: #fff;
+        color: var(--sc-navy);
+        font-weight: 600;
+        font-size: 0.95rem;
+        line-height: 1.3;
+        text-decoration: none;
+        transition: background 120ms ease, border-color 120ms ease;
+
+        &:hover { background: #f1f3f5; border-color: #b8bec6; }
+
+        &--primary {
+            background: var(--sc-navy);
+            border-color: var(--sc-navy);
+            color: #fff;
+
+            &:hover { background: #2c3a50; border-color: #2c3a50; }
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .content .sc-open {
+        padding: 1.25rem 1.1rem 1.4rem;
+
+        &__headline { font-size: 1.4rem; }
+    }
+}
+
+/* ---------------------------------------------------------------
+   Capability groups on the projects index.
+   Same vocabulary as the homepage index, so the site says one thing
+   in one language. Each heading links to its own page, which can be
+   shared on its own.
+   --------------------------------------------------------------- */
+
+.cap-group {
+    margin-bottom: 3.5rem;
+
+    &:last-child { margin-bottom: 1rem; }
+}
+
+.cap-group-title {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: var(--ink-4);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--hairline);
+
+    a {
+        color: var(--text-dark);
+        text-decoration: none;
+        border-bottom: 2px solid transparent;
+
+        &:hover {
+            color: var(--primary-red);
+            border-bottom-color: var(--primary-red);
+        }
+    }
+}
+
+.cap-group-count {
+    font-size: 0.72rem;
+    color: var(--text-light);
+    letter-spacing: 0.04em;
+}
+
+/* Capability labels link through to their project group where one exists */
+.cap-label a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+
+    &:hover { color: var(--primary-red); border-bottom-color: var(--primary-red); }
+}
+
+/* ---------------------------------------------------------------
+   Project filters.
+   Tags are many-to-many, so the page is one list filtered in place
+   rather than repeated sections. Every project appears exactly once.
+   Set as type rather than as chips: the row sits directly under the
+   page title, and a line of buttons there competes with it.
+   --------------------------------------------------------------- */
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.6rem;
+    padding-bottom: 1.9rem;
+}
+
+.filter {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--ink-3);
+    background: none;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    padding: 0.35rem 0;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+
+    &:hover { color: var(--text-dark); }
+
+    &.is-active {
+        color: var(--text-dark);
+        border-bottom-color: var(--primary-red);
+
+        .filter-count { color: var(--primary-red); }
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--primary-red);
+        outline-offset: 3px;
+    }
+}
+
+.filter-count {
+    font-size: 0.68rem;
+    color: var(--text-light);
+    margin-left: 0.45rem;
+}
+
+.filter-empty {
+    color: var(--ink-4);
+    padding: 2rem 0;
+}
+
+
+/* ---------------------------------------------------------------
+   Coursework, collapsed under a credential. Secondary weight: it is
+   supporting evidence, not the headline.
+   --------------------------------------------------------------- */
+
+.coursework {
+    margin: 2.5rem 0 1rem;
+    border-top: 1px solid var(--hairline);
+    padding-top: 1.25rem;
+
+    summary {
+        cursor: pointer;
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: var(--label);
+        list-style: none;
+
+        &::-webkit-details-marker { display: none; }
+        &::before { content: "+ "; color: var(--primary-red); }
+
+        span {
+            color: var(--text-light);
+            margin-left: 0.35rem;
+        }
+    }
+
+    &[open] summary::before { content: "− "; }
+}
+
+.course-list {
+    list-style: none;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    font-size: 0.86rem;
+
+    li {
+        display: grid;
+        grid-template-columns: 7.5rem 6rem 1fr;
+        gap: 0 1rem;
+        padding: 0.4rem 0;
+        border-bottom: 1px solid var(--bg-off-white);
+        margin: 0;
+    }
+
+    .c-term { color: var(--text-light); font-family: var(--font-mono); font-size: 0.76rem; }
+    .c-code { color: var(--label); font-family: var(--font-mono); font-size: 0.76rem; }
+    .c-title { color: var(--ink-2); }
+
+    /* A course with a surviving paper. The link is the evidence, so it gets its
+       own line rather than competing with the course title. */
+    .c-paper {
+        display: block;
+        margin-top: 0.2rem;
+        font-size: 0.8rem;
+        line-height: 1.35;
+
+        &::before { content: "↳ "; color: var(--primary-red); }
+
+        a {
+            color: var(--ink-3);
+            text-decoration: none;
+            border-bottom: 1px solid var(--hairline);
+
+            &:hover { color: var(--primary-red); border-bottom-color: var(--primary-red); }
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .course-list li {
+        grid-template-columns: 1fr;
+        gap: 0.1rem;
+    }
+}
+
+/* Experience — current work, then the previous roles in chapters.
+
+   A 150px year gutter runs down the left of the whole page, so "now" and each
+   chapter's span line up in one column and the reading sits in the other. The
+   page runs on the site container like every other page; the reading column
+   keeps its own measure via .xp-reading. The section's own padding is the
+   shared body padding set with .page-content above. */
+.xp-block {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 2.2rem;
+    padding: 1.8rem 0;
+    border-top: 1px solid var(--hairline);
+}
+
+/* Current work opens the page, so it carries no rule above it. The rule that
+   separates it from the history is heavier than the ones between chapters —
+   it is a different kind of boundary. */
+.xp-block--now {
+    border-top: none;
+    padding-top: 0;
+}
+
+.xp-block--rule {
+    margin-top: 1.8rem;
+    padding-bottom: 0;
+    border-top: 2px solid var(--text-dark);
+
+    .xp-reading { margin-bottom: 0; }
+}
+
+.xp-years {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--label);
+    text-align: right;
+    padding-top: 0.4rem;
+}
+
+.xp-block--now .xp-years { color: var(--primary-red); }
+
+.xp-heading {
+    font-size: 1.55rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.xp-chapter {
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.xp-reading {
+    color: var(--ink-3);
+    max-width: 42rem;
+    margin: 0.25rem 0 1.2rem;
+}
+
+.xp-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.4rem;
+}
+
+.xp-colhead {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--label);
+    border-bottom: 1px solid var(--hairline);
+    padding-bottom: 0.35rem;
+    margin-bottom: 0.7rem;
+}
+
+/* The row's font size is the name's, so the mark can centre itself on the
+   name's first line with em arithmetic alone. */
+.xp-entry {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding: 0.4rem 0;
+    font-size: 0.97rem;
+    line-height: 1.6;
+}
+
+/* The marker carries the kind: a filled square for work, a diamond for a
+   project, an open round for a programme of study. Current work is the only
+   thing on the page drawn in red. */
+.xp-mark {
+    flex: 0 0 10px;
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    background: var(--text-dark);
+    opacity: 0.55;
+    /* half the first line box (line-height 1.6) less half the mark */
+    margin-top: calc(0.8em - 5px);
+}
+
+.xp-entry.is-current .xp-mark {
+    background: var(--primary-red);
+    opacity: 1;
+}
+
+.xp-entry--project .xp-mark {
+    flex-basis: 8px;
+    width: 8px;
+    height: 8px;
+    margin-top: calc(0.8em - 4px);
+    margin-right: 2px;
+    border-radius: 0;
+    transform: rotate(45deg);
+}
+
+.xp-entry--study .xp-mark {
+    background: var(--paper-raised);
+    border: 2px solid var(--text-light);
+    border-radius: 6px;
+}
+
+.xp-name {
+    font-weight: 600;
+    font-size: 1em;
+    color: var(--text-dark);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+
+    &:hover { color: var(--primary-red); border-bottom-color: var(--primary-red); }
+}
+
+.xp-entry--study .xp-name { font-weight: 400; }
+
+.xp-meta {
+    color: var(--label);
+    font-size: 0.83rem;
+    line-height: 1.45;
+}
+
+/* A date range never breaks across lines. */
+.xp-when { white-space: nowrap; }
+
+/* The lead column: current roles are the first thing read on the page. */
+.xp-col--lead {
+    .xp-entry { padding: 0.6rem 0; font-size: 1.05rem; }
+}
+
+.xp-more {
+    margin-top: 0.9rem;
+    font-size: 0.86rem;
+
+    a {
+        color: var(--primary-red);
+        text-decoration: none;
+        border-bottom: 1px solid var(--accent-soft);
+        padding-bottom: 1px;
+
+        &:hover { border-bottom-color: var(--primary-red); }
+    }
+}
+
+/* The coursework behind each chapter, collapsed. Open it and the chapter is
+   evidenced rather than asserted. */
+.xp-courses {
+    margin-top: 1rem;
+
+    summary {
+        font-family: var(--font-mono);
+        font-size: 0.74rem;
+        color: var(--label);
+        cursor: pointer;
+        list-style: none;
+
+        &::-webkit-details-marker { display: none; }
+        &::before { content: "+ "; color: var(--primary-red); }
+    }
+
+    &[open] summary::before { content: "– "; }
+}
+
+.xp-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin-top: 0.75rem;
+}
+
+.xp-chip {
+    font-size: 0.78rem;
+    color: var(--ink-2);
+    background: var(--bg-off-white);
+    border-radius: 12px;
+    padding: 0.2rem 0.7rem;
+
+    i {
+        font-style: normal;
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        color: var(--label);
+        margin-left: 0.375rem;
+    }
+}
+
+/* Narrow: the year gutter moves above its block and the two columns stack. */
+@media (max-width: 780px) {
+    .xp-block {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .xp-years {
+        text-align: left;
+        padding-top: 0;
+    }
+
+    .xp-block--rule .xp-years { display: none; }
+
+    .xp-cols {
+        grid-template-columns: 1fr;
+        gap: 1.6rem;
+    }
+}
+
+/* ---------------------------------------------------------------
+   Projects: two tiers.
+   The section is one list read at two scales — ten projects at
+   medium with imagery, the rest as a dense index. The range
+   between them is what makes it read as a body of work rather
+   than an inventory; the index is only legible as an editorial
+   decision because of what sits above it.
+   Tier membership is decided in templates/projects.html.
+   --------------------------------------------------------------- */
+
+/* Both tiers filter in place, and both set a display value that would
+   outrank the browser default for [hidden]. */
+.proj-sel[hidden],
+.proj-row[hidden],
+.rule-label[hidden] { display: none !important; }
+
+/* ---- selected ---- */
+
+.proj-sels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem 4rem;
+}
+
+/* The homepage shows three of these rather than eight, and has the width for
+   them because nothing else on the page is that wide. */
+.proj-sels--three {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem 3rem;
+}
+
+.proj-sel a { text-decoration: none; color: inherit; display: block; }
+
+/* A hairline so the plate reads as a bounded object: marks are drawn on their
+   own dark ground and screenshots are mostly white, so without it the picture
+   bleeds into the page and the grid loses its rhythm. Every image is a 2:1
+   plate, so the box and the picture are the same shape. */
+.proj-sel-img {
+    aspect-ratio: 2 / 1;
+    background: var(--bg-off-white);
+    border: 1px solid var(--hairline);
+    margin-bottom: 1.1rem;
+    @include registration;
+
+    img { width: 100%; height: 100%; display: block; object-fit: cover; }
+}
+
+.proj-sel-meta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--label);
+    margin-bottom: 0.5rem;
+    min-height: 1em;
+}
+
+.proj-sel-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    transition: color 0.12s ease;
+}
+
+.proj-sel-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--ink-3);
+    margin-top: 0.6rem;
+    max-width: 30rem;
+}
+
+.proj-sel a:hover .proj-sel-title { color: var(--primary-red); }
+
+/* ---- index ---- */
+
+.proj-rows { border-bottom: 1px solid var(--hairline); }
+
+.proj-row {
+    display: grid;
+    grid-template-columns: 1fr 168px;
+    gap: 2rem;
+    align-items: baseline;
+    padding: 0.95rem 0.75rem 0.95rem 0;
+    border-top: 1px solid var(--hairline);
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.12s ease;
+
+    &:hover { background: var(--bg-off-white); }
+    &:hover .proj-row-title { color: var(--primary-red); }
+}
+
+.proj-row-title {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    transition: color 0.12s ease;
+}
+
+.proj-row-desc {
+    display: block;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--ink-3);
+    margin-top: 0.2rem;
+    max-width: 52rem;
+}
+
+.proj-row-tag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--label);
+    text-align: right;
+
+    b { color: var(--text-dark); font-weight: 400; }
+}
+
+.proj-foot { padding-bottom: 5rem; }
+
+/* Tablet: the selected grid stays two up until it can't. */
+@media (max-width: 900px) {
+    .proj-sels--three { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 640px) {
+    .proj-sels { grid-template-columns: 1fr; gap: 2.5rem; }
+    .rule-label--tier { padding-top: 2.75rem; }
+
+    /* The tag moves under the title rather than being squeezed into a
+       168px column that no longer fits the setting name. */
+    .proj-row {
+        grid-template-columns: 1fr;
+        gap: 0.35rem;
+    }
+
+    .proj-row-tag { text-align: left; }
+    .filters { gap: 1.1rem; }
+}

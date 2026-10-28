@@ -1,0 +1,32 @@
+{# A role on the experience page: marker, linked name, role, and years.
+
+   No start year means the site has no date for the role, and none is shown.
+   No end year means one of two things, and only data/experience.toml can tell
+   them apart: a current role is still running, and a previous one ended in a
+   year nobody has recorded yet. The second renders open on the right rather
+   than claiming either an end or an ongoing engagement. #}
+{% macro role(p, current=false) %}
+<div class="xp-entry xp-entry--work{% if current %} is-current{% endif %}">
+    <span class="xp-mark"></span>
+    <div class="xp-entry-body">
+        <a class="xp-name" href="{{ p.permalink }}">{{ p.title }}</a>
+        <p class="xp-meta">{{ p.extra.role }}
+            {%- if p.extra.start %} · <span class="xp-when">
+            {%- if p.extra.end %}{{ p.extra.start }}–{{ p.extra.end }}
+            {%- elif current %}{{ p.extra.start }}–present
+            {%- else %}{{ p.extra.start }}–{% endif %}</span>
+            {%- endif %}</p>
+    </div>
+</div>
+{% endmacro role %}
+
+{# Anything that is not a role: a project, or a program of study. #}
+{% macro entry(title, link, meta, kind) %}
+<div class="xp-entry xp-entry--{{ kind }}">
+    <span class="xp-mark"></span>
+    <div class="xp-entry-body">
+        <a class="xp-name" href="{{ link }}">{{ title }}</a>
+        {% if meta %}<p class="xp-meta">{{ meta }}</p>{% endif %}
+    </div>
+</div>
+{% endmacro entry %}

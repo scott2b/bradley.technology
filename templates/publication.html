@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% import "nav_macros.html" as nav %}
+{% import "publication_macros.html" as pub %}
+
+{#- The same shape as every other detail page: the header band, then the body
+    at the reading measure. The citation block opens the body. -#}
+{% block content %}
+<section class="page-header">
+    <div class="container page-head">
+        {{ nav::crumb(parent="Publications", parent_url=get_url(path='publications')) }}
+        <h1 class="page-title">{{ page.title }}</h1>
+        <p class="pub-authors">{{ pub::authors(list=page.extra.authors) }}</p>
+    </div>
+</section>
+
+<section class="page-content">
+    <div class="container">
+        <div class="page-body">
+            <dl class="pub-citation">
+                {% if page.extra.venue %}<dt>Published in</dt><dd><cite>{{ page.extra.venue }}</cite>{% if page.extra.venue_short %} ({{ page.extra.venue_short }}){% endif %}</dd>{% endif %}
+                {% if page.extra.publisher %}<dt>Publisher</dt><dd>{{ page.extra.publisher }}{% if page.extra.year %}, {{ page.extra.year }}{% endif %}</dd>{% endif %}
+                {% if page.extra.pages %}<dt>Pages</dt><dd>{{ page.extra.pages }}</dd>{% endif %}
+                {% if page.extra.doi %}<dt>DOI</dt><dd><a href="https://doi.org/{{ page.extra.doi }}">{{ page.extra.doi }}</a></dd>{% endif %}
+                {% if page.extra.pdf %}<dt>Paper</dt><dd><a href="{{ get_url(path=page.extra.pdf) }}">PDF</a></dd>{% endif %}
+                {% if page.extra.lab %}<dt>Research</dt><dd>{{ page.extra.lab }}</dd>{% endif %}
+            </dl>
+
+            <div class="content pub-body">{{ page.content | safe }}</div>
+        </div>
+    </div>
+</section>
+{% endblock %}

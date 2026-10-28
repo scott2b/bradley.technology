@@ -1,0 +1,13 @@
+{#- A figure in the body copy: a screenshot, a photograph, or a drawing.
+    {{ figure(src="/images/projects/x.png", alt="what is shown") }}
+    {{ figure(src=..., alt=..., caption="what to print under it") }}
+    The caption defaults to the alt text. Numbered by a CSS counter, so a page's
+    figures read FIG. 1, FIG. 2 in order with no numbering in the markdown.
+    A raster image's size goes on the tag so the page does not jump as it loads. -#}
+{%- set path = "static" ~ src -%}
+{%- set meta = get_image_metadata(path=path, allow_missing=true) -%}
+{%- set cap = caption | default(value=alt) -%}
+<figure class="figure">
+<div class="figure__frame"><img src="{{ src }}" alt="{{ alt }}" loading="lazy"{% if meta %} width="{{ meta.width }}" height="{{ meta.height }}"{% endif %}></div>
+<figcaption>{{ cap }}</figcaption>
+</figure>

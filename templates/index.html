@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% import "project_macros.html" as proj %}
+{% import "project_parts.html" as parts %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-text">
+        <h1>
+            {{ section.extra.main_title }}
+            {% if section.extra.byline %}
+            <span class="byline">
+                {%- for w in section.extra.byline -%}
+                    <span class="byline-word">{{ w }}</span>
+                    {%- if not loop.last %}<span class="byline-dot" aria-hidden="true"></span>{% endif -%}
+                {%- endfor -%}
+            </span>
+            {% endif %}
+        </h1>
+        <div class="hero-desc">{{ section.content | safe }}</div>
+    {#- Sheet 00: the site's own plate, a general-arrangement drawing of the
+        themes the work runs across rather than a preview of any project.
+        Drawn to data/marks.toml [site.sheet-00] and promoted to static/images. -#}
+    <figure class="hero-plate sheet">
+        <img src="{{ get_url(path="images/sheet-00.webp") }}" alt="Sheet 00: general arrangement" width="1200" height="600">
+        {{ parts::band(title="General arrangement", sheet="00") }}
+    </figure>
+    </div>
+</section>
+
+{% if section.extra.capabilities %}
+<section class="capabilities">
+    <div class="container">
+        <p class="rule-label">What I work on</p>
+        <dl class="cap-list">
+            {% for c in section.extra.capabilities %}
+            {#- The label opens /projects/ with its own filter applied. The taxonomy
+                is looked up rather than slugified here so a label that matches no
+                capability prints as plain text instead of linking nowhere. -#}
+            {%- set tax = get_taxonomy(kind="capabilities") -%}
+            {%- set hit = tax.items | filter(attribute="name", value=c.label) -%}
+            <dt class="cap-label">
+                {%- if hit | length > 0 -%}
+                    <a href="{{ get_url(path="@/projects/_index.md") }}#{{ hit | first | get(key='slug') }}">{{ c.label }}</a>
+                {%- else -%}{{ c.label }}{%- endif -%}
+            </dt>
+            <dd class="cap-body">
+                <span class="cap-detail">{{ c.detail }}</span>
+                <span class="cap-work">
+                    {% for w in c.work %}{% if w.href %}<a href="{{ w.href }}">{{ w.name }}</a>{% else %}<span class="cap-plain">{{ w.name }}</span>{% endif %}{% if not loop.last %} · {% endif %}{% endfor %}
+                </span>
+            </dd>
+            {% endfor %}
+        </dl>
+    </div>
+</section>
+{% endif %}
+
+{% if section.extra.selected %}
+<section class="selected-work">
+    <div class="container">
+        <p class="rule-label">Selected work</p>
+        {#- The same entry the selected tier of /projects/ is built from, so a
+            project looks like itself on both pages and there is one place to
+            change how one is drawn. Three fixed slots and no filter, so the
+            light-dark rhythm is set here: the third plate is the print. -#}
+        <div class="proj-sels proj-sels--three">
+            {% for path in section.extra.selected %}
+                {%- set p = get_page(path=path) -%}
+                {%- set dark = loop.index == 3 -%}
+                {{ proj::entry(page=p, print=dark) }}
+            {% endfor %}
+        </div>
+        <p class="block-more"><a href="{{ get_url(path="@/projects/_index.md") }}">All projects →</a></p>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

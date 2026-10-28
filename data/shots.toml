@@ -1,0 +1,17 @@
+# Screenshots and photographs: the images that are evidence rather than marks.
+#
+# Every front-matter image on the site is a 1200x600 plate, so a project looks
+# the same in the selected grid and at the top of its own page and the frames
+# around it need no special cases. `tools/images.py frame` reads the original
+# from image-src/projects/, makes the plate, writes static/images/projects/
+# <slug>.webp and points the page at it. Originals are never edited.
+#
+#   fit = "crop"    the image fills the plate; `anchor` is where the 2:1 window
+#                   sits, 0.0 at the top of the source, 1.0 at the bottom.
+#                   Screenshots anchor at the top so the page's own headline
+#                   survives.
+#   fit = "matte"   the image sits on the off-white ground at its own size,
+#                   never enlarged, with a hairline round it. Kept for captures
+#                   that are worth showing whole; the projects whose only capture
+#                   was a thumbnail carry a mark instead (data/marks.toml).
+

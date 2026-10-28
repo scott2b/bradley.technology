@@ -1,0 +1,7 @@
+{#- A logo or wordmark in the body copy, small and unframed:
+    {{ mark(src="/images/projects/sensorgrid-logo.png", alt="SensorGrid") }}
+    With strip=true it is a wide strip shown at the column's width and its own
+    height, for a mark that is only legible at full size (JackTaxa's window chrome). -#}
+{%- set path = "static" ~ src -%}
+{%- set meta = get_image_metadata(path=path, allow_missing=true) -%}
+<img class="mark{% if strip %} mark--strip{% endif %}" src="{{ src }}" alt="{{ alt }}"{% if meta %} width="{{ meta.width }}" height="{{ meta.height }}"{% endif %}>

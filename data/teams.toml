@@ -1,0 +1,19 @@
+# The people Scott worked with at each organization. An experience page opts in
+# with `team = "<key>"` in its [extra], and the page template renders the list
+# under the team's `heading`, which should say that these are the people Scott
+# worked with there, not the organization's roster. A member is either an id from people.toml, which
+# renders as a person link with the hover card, or a plain name in quotes for
+# someone with no verified profile yet. The list is Scott's, not the
+# organization's roster: people are added and removed by hand.
+
+[infolab]
+heading = "People I worked with at the InfoLab"
+# Started from the lab's team page of March 2016
+# (https://web.archive.org/web/20160329073853/http://infolab.northwestern.edu/team.html),
+# then edited: the last line adds people from the period who are not on that page.
+members = [
+  "birnbaum", "hammond", "owsley", "ssood", "allen", "boon",
+  "cohn", "gandy", "iacobelli", "kash", "kuntz", "liu",
+  "mcnally", "nichols", "obanion", "shaw", "smathers", "hsmith",
+  "templon", "thompson", "wagner", "wilson",
+]

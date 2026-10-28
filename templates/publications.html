@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% import "nav_macros.html" as nav %}
+{% import "publication_macros.html" as pub %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container page-head">
+        {{ nav::crumb(parent="Bradley", parent_url=config.base_url, current=section.title) }}
+        <h1 class="section-title">{{ section.title }}</h1>
+        <div class="section-description">{{ section.content | safe }}</div>
+    </div>
+</section>
+
+<section class="pub-section">
+    <div class="container">
+        <ul class="pub-list">
+            {% for page in section.pages %}
+            <li class="pub">
+                <h2 class="pub-title"><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
+                <p class="pub-authors">{{ pub::authors(list=page.extra.authors) }}</p>
+                <p class="pub-venue">
+                    <cite>{{ page.extra.venue_short }}</cite>{% if page.extra.publisher %} · {{ page.extra.publisher }}{% endif %}{% if page.extra.year %} · {{ page.extra.year }}{% endif %}{% if page.extra.pages %} · pp.&nbsp;{{ page.extra.pages }}{% endif %}
+                </p>
+                {% if page.extra.doi %}
+                <p class="pub-meta"><a class="pub-doi" href="https://doi.org/{{ page.extra.doi }}">doi:{{ page.extra.doi }}</a></p>
+                {% elif page.extra.pdf %}
+                <p class="pub-meta"><a class="pub-doi" href="{{ get_url(path=page.extra.pdf) }}">PDF</a></p>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+
+        {#- Grant proposals, from data/proposals.toml: thinner entries under the
+            papers, with no page of their own. -#}
+        {%- set proposals = load_data(path="data/proposals.toml") %}
+        {%- if proposals.proposal %}
+        <h2 class="pub-group" id="proposals">Grant proposals</h2>
+        <ul class="pub-list pub-list--thin">
+            {% for g in proposals.proposal %}
+            <li class="pub">
+                <h3 class="pub-title">{{ g.title }}</h3>
+                <p class="pub-authors">{{ pub::authors(list=g.authors) }}</p>
+                <p class="pub-venue"><cite>{{ g.program }}</cite> · {{ g.year }}{% if g.outcome %} · {{ g.outcome | lower }}{% endif %}</p>
+            </li>
+            {% endfor %}
+        </ul>
+        {%- endif %}
+    </div>
+</section>
+{% endblock %}

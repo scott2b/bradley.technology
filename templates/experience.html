@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% import "nav_macros.html" as nav %}
+{% import "experience_macros.html" as xp %}
+
+{#- Current work first, at full weight; then the previous roles, read forward
+    from 1990 in chapters. What counts as current is declared in
+    data/experience.toml rather than inferred from the pages. -#}
+
+{% block content %}
+{%- set data = load_data(path="data/experience.toml") -%}
+{%- set cw = load_data(path="data/coursework.toml") -%}
+{%- set projects = get_section(path="projects/_index.md") -%}
+
+<section class="page-header">
+    <div class="container page-head">
+        {{ nav::crumb(parent="Bradley", parent_url=config.base_url, current=section.title) }}
+        <h1 class="section-title">{{ section.title }}</h1>
+        <div class="section-description">{{ section.content | safe }}</div>
+    </div>
+</section>
+
+<section class="xp">
+    <div class="container">
+
+        <div class="xp-block xp-block--now">
+            <p class="xp-years">now</p>
+            <div class="xp-body">
+                <h2 class="xp-heading">Current work</h2>
+                <p class="xp-reading">{{ data.current_reading }}</p>
+                <div class="xp-cols">
+                    <div class="xp-col xp-col--lead">
+                        <p class="xp-colhead">Roles</p>
+                        {%- for slug in data.current_roles %}
+                        {%- set hit = section.pages | filter(attribute="slug", value=slug) %}
+                        {%- if hit | length > 0 %}
+                        {{ xp::role(p=hit | first, current=true) }}
+                        {%- endif %}
+                        {%- endfor %}
+                    </div>
+                    <div class="xp-col">
+                        <p class="xp-colhead">Projects</p>
+                        {#- A slug with no page yet is not drawn. The declaration
+                            stays in the data file and the row appears by itself
+                            once the page lands. -#}
+                        {%- for slug in data.current_projects %}
+                        {%- set hit = projects.pages | filter(attribute="slug", value=slug) %}
+                        {%- if hit | length > 0 %}
+                        {%- set p = hit | first %}
+                        {{ xp::entry(title=p.title, link=p.permalink, kind="project",
+                                     meta=p.extra.subtitle | default(value="")) }}
+                        {%- endif %}
+                        {%- endfor %}
+                        <p class="xp-more"><a href="{{ get_url(path='projects') }}">More projects →</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="xp-block xp-block--rule">
+            <p class="xp-years"></p>
+            <div class="xp-body">
+                <h2 class="xp-heading">Previous roles</h2>
+                <p class="xp-reading">{{ data.previous_reading }}</p>
+            </div>
+        </div>
+
+        {%- for ch in data.chapters %}
+        {%- set cend = ch.end | default(value=9999) %}
+
+        {#- Roles that started in this chapter, oldest first. Current roles are
+            never repeated here — a role listed under "Previous" that is still
+            running is a contradiction. Where one began in a chapter, the
+            chapter's own sentence says so. -#}
+        {#- Collected in reverse of the section's weight order so that roles
+            sharing a start year come out oldest-ending first; the sort below is
+            stable and leaves that tie alone. -#}
+        {%- set_global dated = [] %}
+        {%- for p in section.pages | reverse %}
+        {%- if p.extra.start and p.extra.start >= ch.start and p.extra.start < cend
+               and p.slug not in data.current_roles %}
+        {%- set_global dated = dated | concat(with=p) %}
+        {%- endif %}
+        {%- endfor %}
+
+        {%- set_global has_study = false %}
+        {%- for s in data.study %}
+        {%- if s.start >= ch.start and s.start < cend %}
+        {%- set_global has_study = true %}
+        {%- endif %}
+        {%- endfor %}
+
+        <div class="xp-block">
+            <p class="xp-years">{{ ch.start }}–{% if ch.end %}{{ ch.end }}{% else %}present{% endif %}</p>
+            <div class="xp-body">
+                <h3 class="xp-chapter">{{ ch.title }}</h3>
+                <p class="xp-reading">{{ ch.reading }}</p>
+                <div class="xp-cols">
+                    <div class="xp-col">
+                        <p class="xp-colhead">Roles</p>
+                        {#- Roles asserted by the chapter itself: what a current
+                            engagement also does here, such as mentoring. They
+                            precede the dated roles, which they predate. -#}
+                        {%- for r in ch.roles | default(value=[]) %}
+                        {%- set hit = section.pages | filter(attribute="slug", value=r.page) %}
+                        {%- if hit | length > 0 %}
+                        {%- set rp = hit | first %}
+                        {%- set until = r.end | default(value="present") %}
+                        {{ xp::entry(title=rp.title, link=rp.permalink, kind="work",
+                                     meta=r.role ~ " · " ~ r.start ~ "–" ~ until) }}
+                        {%- endif %}
+                        {%- endfor %}
+                        {%- for p in dated | sort(attribute="extra.start") %}
+                        {{ xp::role(p=p) }}
+                        {%- endfor %}
+                        {#- Roles the site has no start year for. They cannot sort
+                            themselves, so the data file asserts the chapter and
+                            they sit at the foot of it. -#}
+                        {%- for slug in ch.place | default(value=[]) %}
+                        {%- set hit = section.pages | filter(attribute="slug", value=slug) %}
+                        {%- if hit | length > 0 %}
+                        {{ xp::role(p=hit | first) }}
+                        {%- endif %}
+                        {%- endfor %}
+                    </div>
+                    <div class="xp-col">
+                        {%- if has_study %}
+                        <p class="xp-colhead">Study</p>
+                        {%- for s in data.study %}
+                        {%- if s.start >= ch.start and s.start < cend %}
+                        {{ xp::entry(title=s.name, kind="study",
+                                     link=get_url(path="@/credentials/" ~ s.credential ~ ".md"),
+                                     meta="Program · " ~ s.start ~ "–" ~ s.end) }}
+                        {%- endif %}
+                        {%- endfor %}
+
+                        {%- set_global chips = "" %}
+                        {%- set_global taken = 0 %}
+                        {%- for s in data.study %}
+                        {%- for c in cw[s.credential].courses %}
+                        {%- set y = c.term | split(pat=" ") | last | int %}
+                        {%- if y >= ch.start and y < cend %}
+                        {%- set_global taken = taken + 1 %}
+                        {%- set_global chips = chips ~ '<span class="xp-chip">' ~ c.title
+                                               ~ '<i>' ~ s.short ~ '</i></span>' %}
+                        {%- endif %}
+                        {%- endfor %}
+                        {%- endfor %}
+                        {%- if taken > 0 %}
+                        <details class="xp-courses">
+                            <summary>{{ taken }} courses</summary>
+                            <div class="xp-chips">{{ chips | safe }}</div>
+                        </details>
+                        {%- endif %}
+                        {%- endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {%- endfor %}
+
+    </div>
+</section>
+{% endblock %}

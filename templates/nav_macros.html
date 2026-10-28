@@ -1,0 +1,16 @@
+{#- Breadcrumb above a page header.
+
+    Section indexes name their parent and themselves; detail pages name only
+    the section they belong to, since the page's own title is already the H1
+    directly beneath. Marked up as a nav landmark with an ordered list so it
+    is announced and skippable, rather than a decorative line of text. -#}
+{% macro crumb(parent, parent_url, current="") %}
+<nav class="crumb" aria-label="Breadcrumb">
+    <ol>
+        <li><a href="{{ parent_url }}">{{ parent }}</a></li>
+        {%- if current %}
+        <li aria-current="page">{{ current }}</li>
+        {%- endif %}
+    </ol>
+</nav>
+{% endmacro crumb %}

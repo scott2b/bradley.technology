@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}
+      {%- if page is defined and page.title -%}{{ page.title }} · {{ config.title }}
+      {%- elif section is defined and section.title and section.path != "/" -%}{{ section.title }} · {{ config.title }}
+      {%- elif section is defined and section.title -%}{{ section.title }}
+      {%- else -%}{{ config.title }}{%- endif -%}
+    {% endblock %}</title>
+    <meta name="description" content="{% if page is defined and page.description %}{{ page.description }}{% elif section is defined and section.description %}{{ section.description }}{% else %}{{ config.description }}{% endif %}">
+    <link rel="stylesheet" href="{{ get_url(path='style.css') }}">
+</head>
+<body>
+    <nav class="site-nav" aria-label="Main">
+        <div class="container nav-inner">
+            <div class="logo">
+                <a href="{{ config.base_url }}">
+                    {#- The viewBox is cropped to the wordmark's own ink. A box with
+                        empty space in it centers the space, not the letters, which is
+                        how the mark ended up sitting above the nav text. -#}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="173" height="24" viewBox="150 18 346 48">
+                        <text x="350" y="55" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="48" style="fill: var(--text-dark)">bradley</text>
+                        <g transform="translate(358, 55)">
+                            <circle cx="-5" cy="-2" r="4" style="fill: var(--primary-red)" class="bouncing-dot"></circle>
+                            <text x="0" y="0" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="28" style="fill: var(--label)">technology</text>
+                        </g>
+                    </svg>
+                </a>
+            </div>
+            <div class="main-nav">
+                <ul>
+                    <li><a href="{{ get_url(path='projects') }}">Projects</a></li>
+                    <li><a href="{{ get_url(path='experience') }}">Experience</a></li>
+                    <li><a href="{{ get_url(path='publications') }}">Publications</a></li>
+                    <li><a href="{{ get_url(path='credentials') }}">Credentials</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p class="footer-links">
+            <a href="https://www.linkedin.com/in/scott-bradley-3a19b01">LinkedIn</a>
+            <a href="https://codeandcircuits.com">Code &amp; Circuits</a>
+            <a href="https://github.com/scott2b">GitHub</a>
+        </p>
+        <p>&copy; {{ now() | date(format="%Y") }} Scott Bradley</p>
+    </footer>
+
+    <script>
+    // A person's hover card hangs from the left of the name. When that would
+    // run past the right edge of the window, hang it from the right instead.
+    (function () {
+        function place(e) {
+            var a = e.target.closest ? e.target.closest('.person') : null;
+            if (!a) return;
+            var c = a.querySelector('.person-card');
+            if (!c) return;
+            c.classList.remove('flip');
+            c.style.display = 'block';
+            if (c.getBoundingClientRect().right > window.innerWidth - 16) c.classList.add('flip');
+            c.style.display = '';
+        }
+        document.addEventListener('mouseover', place);
+        document.addEventListener('focusin', place);
+    })();
+    </script>
+</body>
+</html> 

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% import "nav_macros.html" as nav %}
+{% import "project_parts.html" as parts %}
+{% import "person_macros.html" as pm %}
+
+{% block content %}
+{%- set parent = page.ancestors | last -%}
+{%- set is_project = parent == "projects/_index.md" -%}
+{%- set settings = page.taxonomies.settings | default(value=[]) -%}
+{%- set caps = page.taxonomies.capabilities | default(value=[]) -%}
+{#- A project page opens the way the home page does: title and plate together
+    on the off-white tint, the body on white under it. The plate is a 1200x600
+    sheet (see project_parts.html) closing with a title block, in the same
+    .sheet frame Sheet 00 takes. An experience page takes the same band with
+    title and subtitle only, and its logo, whatever size it is, sits at the
+    top of the body with no block. -#}
+<section class="page-header{% if is_project %} page-header--sheet{% endif %}">
+    <div class="container page-head">
+        {%- set crumb_parent = get_section(path=page.ancestors | last, metadata_only=true) -%}
+        {{ nav::crumb(parent=crumb_parent.title, parent_url=crumb_parent.permalink) }}
+        <h1 class="page-title">{{ page.title }}</h1>
+        {#- Titles keep their parts in separate fields so the section pages can
+            sort, group, and filter on them, and each fact has exactly one
+            source. A project's subtitle is its tagline; its place and year go
+            in the facts rail below. An experience role composes role, place,
+            and dates back into one line here. A missing part prints nothing
+            rather than a guess. -#}
+        {% if page.extra.tagline %}
+        <h2 class="page-subtitle">{{ page.extra.tagline }}</h2>
+        {#- Whether a role is still running is declared in data/experience.toml,
+            not read off this page. -#}
+        {% elif page.extra.role %}
+        {%- set xp = load_data(path="data/experience.toml") -%}
+        {%- set current = page.slug in xp.current_roles -%}
+        <h2 class="page-subtitle">{{ page.extra.role }}
+            {%- if page.extra.place %} · {{ page.extra.place }}{% endif %}
+            {%- if page.extra.start %} ·
+            {%- if page.extra.end %} {{ page.extra.start }}–{{ page.extra.end }}
+            {%- elif current %} {{ page.extra.start }}–present
+            {%- else %} {{ page.extra.start }}–{% endif %}
+            {%- endif %}</h2>
+        {% endif %}
+    </div>
+    {% if is_project and page.extra.image %}
+    <div class="container">
+        <div class="featured-image sheet">
+            <img src="{{ page.extra.image }}" alt="{{ page.title }}">
+            {{ parts::band(title=page.title, work=caps | join(sep=" · ")) }}
+        </div>
+    </div>
+    {% endif %}
+</section>
+
+<section class="page-content">
+    <div class="container">
+        {% if page.extra.image and not is_project %}
+        <div class="featured-image">
+            <img src="{{ page.extra.image }}" alt="{{ page.title }}">
+        </div>
+        {% endif %}
+
+        <div class="page-body{% if is_project %} page-body--project{% endif %}">
+            <div class="content">
+                {{ page.content | safe }}
+
+                {#- The people Scott worked with here, from data/teams.toml,
+                    rendered when an experience page sets extra.team. A member
+                    that is an id in people.toml gets the person link and hover
+                    card; anything else is a plain name with no profile yet. -#}
+                {% if page.extra.team %}
+                {%- set teams = load_data(path="data/teams.toml") -%}
+                {%- set team = teams[page.extra.team] -%}
+                {%- set people = load_data(path="data/people.toml") -%}
+                <section class="team" id="people" aria-labelledby="people-heading">
+                    <h2 id="people-heading">{{ team.heading | default(value="People I worked with here") }}</h2>
+                    <ul class="team__list">
+                        {% for m in team.members %}
+                        <li>{% if m in people %}{{ pm::person(id=m, p=people[m], shown=people[m].name) }}{% else %}{{ m }}{% endif %}</li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                {% endif %}
+            </div>
+
+            {#- The facts rail. Every line here has one source: the plate
+                number is the project's position in the section's order, the
+                setting is its taxonomy term, place and year are its front
+                matter. The capabilities live in the band above, so they are
+                not repeated here. A missing fact prints nothing. -#}
+            {% if is_project %}
+            <aside class="facts" aria-label="Project facts">
+                <dl>
+                    <dt>Plate</dt>
+                    <dd class="facts__plate">{{ parts::plate(page=page) }}</dd>
+                    {% if page.extra.year %}
+                    <dt>Year</dt>
+                    <dd>{{ page.extra.year }}</dd>
+                    {% endif %}
+                    {% if page.extra.place %}
+                    <dt>Where</dt>
+                    <dd>{{ page.extra.place }}</dd>
+                    {% endif %}
+                    {% if settings | length > 0 %}
+                    <dt>Setting</dt>
+                    <dd>{{ settings | first }}</dd>
+                    {% endif %}
+                </dl>
+            </aside>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,38 @@
+# The URL the site will be built for
+base_url = "https://bradley.technology"
+title = "Scott Bradley"
+description = "Software, systems, AI, and electronics engineer. Embedded hardware, natural language and machine learning systems, and the data infrastructure between them."
+# Both taxonomies are data, not destinations. They drive the filter row and the
+# meta lines on /projects/; the generated term pages were a second, worse copy
+# of that page, so they are not rendered.
+taxonomies = [
+    { name = "capabilities", feed = false, render = false },
+    { name = "settings", feed = false, render = false },
+]
+
+# Whether to automatically compile all Sass files in the sass directory
+compile_sass = true
+
+# Whether to build a search index to be used later on by a JavaScript library
+build_search_index = true
+
+# Whether to minify HTML
+minify_html = true
+
+# Whether to generate a sitemap
+generate_sitemap = true
+
+# Whether to generate robots.txt
+generate_robots_txt = true
+
+# The output directory
+output_dir = "public"
+
+[markdown]
+# Whether to do syntax highlighting
+highlight_code = false
+# External links in body copy open off site, in a new tab, like the person links
+external_links_target_blank = true
+
+[extra]
+# Put all your custom variables here

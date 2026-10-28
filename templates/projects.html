@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% import "nav_macros.html" as nav %}
+{% import "project_parts.html" as parts %}
+{% import "project_macros.html" as proj %}
+
+{#- Two tiers, cut from position in the section's own order, which `weight`
+    in each file already sets and which is an editorial ranking. A handful of
+    projects at medium scale with imagery, the rest as a dense index. The
+    appeal is the range between them, not ornament, and the index only reads
+    as deliberate because of what sits above it. The cut point is declared in
+    content/projects/_index.md. Zola does not expose `weight` to templates -- it
+    consumes it for sorting -- so the tiers count off `loop.index` instead, which
+    is the same order and does not care whether the weights are contiguous. -#}
+{% block content %}
+{#- Set inside the block: a `set` outside one is not in scope within it. -#}
+{%- set selected_max = section.extra.selected_max | default(value=10) -%}
+<section class="page-header">
+    <div class="container page-head">
+        {{ nav::crumb(parent="Bradley", parent_url=config.base_url, current=section.title) }}
+        <h1 class="section-title">{{ section.title }}</h1>
+        <div class="section-description">{{ section.content | safe }}</div>
+    </div>
+</section>
+
+<div class="container">
+    {% set tax = get_taxonomy(kind="capabilities") %}
+    <div class="filters" role="group" aria-label="Filter projects by capability">
+        <button class="filter is-active" data-filter="all" aria-pressed="true">
+            All <span class="filter-count">{{ section.pages | length }}</span>
+        </button>
+        {% for capname in section.extra.capability_order %}
+            {% set hit = tax.items | filter(attribute="name", value=capname) %}
+            {% if hit | length > 0 %}
+                {% set term = hit | first %}
+                <button class="filter" data-filter="{{ term.slug }}" aria-pressed="false">
+                    {{ term.name }} <span class="filter-count">{{ term.pages | length }}</span>
+                </button>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<div class="container">
+    <p class="rule-label rule-label--tier" id="proj-lab-sel">Selected work <b></b></p>
+    <div class="proj-sels" id="proj-sels">
+        {% for page in section.pages %}{% if loop.index <= selected_max %}
+            {{ proj::entry(page=page) }}
+        {% endif %}{% endfor %}
+    </div>
+
+    <p class="rule-label rule-label--tier" id="proj-lab-idx">Project index <b></b></p>
+    <div class="proj-rows" id="proj-rows">
+        {% for page in section.pages %}{% if loop.index > selected_max %}
+            {{ proj::row(page=page) }}
+        {% endif %}{% endfor %}
+    </div>
+
+    <p class="filter-empty" hidden>Nothing in that group yet.</p>
+    <div class="proj-foot"></div>
+</div>
+
+<script>
+(function () {
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('.filter'));
+  var items   = Array.prototype.slice.call(document.querySelectorAll('[data-caps]'));
+  var empty   = document.querySelector('.filter-empty');
+  var groups  = [['proj-sels', 'proj-lab-sel'], ['proj-rows', 'proj-lab-idx']];
+
+  function apply(name, push) {
+    items.forEach(function (el) {
+      var caps = (el.getAttribute('data-caps') || '').split(' ');
+      el.hidden = !(name === 'all' || caps.indexOf(name) !== -1);
+    });
+
+    // Counts report what is on screen, so a stale number never sits over a
+    // shorter list, and a tier with nothing left loses its heading too.
+    var shown = 0;
+    groups.forEach(function (g) {
+      var box = document.getElementById(g[0]);
+      var lab = document.getElementById(g[1]);
+      if (!box || !lab) return;
+      var n = Array.prototype.slice.call(box.children).filter(function (el) {
+        return !el.hidden;
+      }).length;
+      lab.querySelector('b').textContent = n;
+      lab.hidden = n === 0;
+      shown += n;
+    });
+    if (empty) empty.hidden = shown !== 0;
+    prints();
+
+    buttons.forEach(function (b) {
+      var on = b.dataset.filter === name;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    if (push) {
+      history.replaceState(null, '', name === 'all' ? location.pathname : '#' + name);
+    }
+  }
+
+  // Light and dark plates alternate by position among the plates on screen,
+  // not by project: a checkerboard at two columns, every other one at one.
+  // Only a drawn sheet has a print to swap to; an older plate keeps its own
+  // look wherever it lands. With no script every plate is its sheet.
+  var grid   = document.getElementById('proj-sels');
+  var oneCol = window.matchMedia('(max-width: 640px)');
+  function prints() {
+    if (!grid) return;
+    var shown = Array.prototype.slice.call(grid.children).filter(function (el) {
+      return !el.hidden;
+    });
+    shown.forEach(function (el, i) {
+      var img = el.querySelector('img[data-print]');
+      if (!img) return;
+      var dark = oneCol.matches ? i % 2 === 1 : ((i >> 1) + (i & 1)) % 2 === 1;
+      var want = img.getAttribute(dark ? 'data-print' : 'data-sheet');
+      if (img.getAttribute('src') !== want) img.setAttribute('src', want);
+    });
+  }
+  if (oneCol.addEventListener) oneCol.addEventListener('change', prints);
+  else if (oneCol.addListener) oneCol.addListener(prints);
+
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () { apply(b.dataset.filter, true); });
+  });
+
+  var initial = (location.hash || '').replace('#', '');
+  apply(buttons.some(function (b) { return b.dataset.filter === initial; }) ? initial : 'all', false);
+})();
+</script>
+{% endblock %}

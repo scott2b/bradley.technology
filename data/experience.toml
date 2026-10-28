@@ -1,0 +1,97 @@
+# The editorial layer of /experience/ — what is current, and the chapters the
+# previous roles are read in.
+#
+# Roles, dates, and descriptions come from content/experience/; project titles
+# and descriptions from content/projects/. Only what those pages cannot say for
+# themselves lives here.
+
+# Roles still running, in display order. Deliberately not read off the pages,
+# so that a page's dates and the editorial judgement of what is current stay
+# separate things. See STATUS.md in the vault project (~/vault/projects/BradleyTechnology).
+current_roles = ["knightlab", "socialcontext", "coursera"]
+
+# Current projects, in display order. The weight order on content/projects/ is
+# that section's own editorial ranking and says nothing about what is running.
+# A slug with no page under content/projects/ is simply not drawn.
+current_projects = ["newscompass", "overstory", "socialcontext-open", "sensorgrid"]
+
+current_reading = "Knight Lab since 2012, socialcontext.ai since 2020, and course design for Coursera."
+
+previous_reading = "Oldest first. Degrees and coursework appear in the years they were taken."
+
+# Program spans, from the transcript record in
+# ~/vault/archive/courses-and-academic-completions.md. Nothing is estimated.
+# The credential pages carry completion years only, which is why the spans are
+# here rather than read from content/credentials/.
+[[study]]
+name = "Purdue University"
+short = "Purdue"
+start = 1990
+end = 1994
+credential = "purdue-bsee"
+
+[[study]]
+name = "Capella University"
+short = "Capella"
+start = 2002
+end = 2004
+credential = "capella-coursework"
+
+[[study]]
+name = "DePaul University"
+short = "DePaul"
+start = 2004
+end = 2008
+credential = "depaul-mscs"
+
+[[study]]
+name = "UIC"
+short = "UIC"
+start = 2006
+end = 2007
+credential = "uic-bioinformatics"
+
+# Previous roles, oldest first. `end` is exclusive: a role belongs to the
+# chapter its start year falls in. The 2000–2002 gap falls between chapters
+# rather than inside one, so nothing has to be drawn across it.
+#
+# `place` lists slugs of roles the site has no start year for. They cannot sort
+# themselves, so the chapter is asserted here in the open rather than by giving
+# the role a date it does not have. (None at the moment.)
+
+[[chapters]]
+start = 1990
+end = 2000
+title = "Electrical engineering"
+reading = """Purdue, then controls and building-systems design, then three years at \
+Nortel commissioning network management systems for carriers."""
+
+[[chapters]]
+start = 2002
+end = 2010
+title = "Computer science"
+reading = """Graduate study in computer science while technology lead at Cedarstone, \
+then developer roles at DePaul, the Field Museum, and Northwestern's InfoLab."""
+
+[[chapters]]
+start = 2010
+end = 2018
+title = "Natural language"
+reading = """Natural language generation on Narrative Science's founding team, then \
+metaphor identification at IIT's Linguistic Cognition Lab. The Knight Lab began in \
+2012 and is under current work."""
+
+[[chapters]]
+start = 2018
+title = "Teaching & Mentoring"
+reading = """Teaching assistant on CU Boulder's Digital Advertising Analytics course, \
+mentoring newsroom teams through JournalismAI, and advising student projects at \
+the Knight Lab."""
+
+# A role a current engagement also plays in this chapter. The Knight Lab is
+# under current work as a job; the mentoring it includes is listed here as
+# well, so the chapter is complete. `page` is the experience page it links to.
+[[chapters.roles]]
+page = "knightlab"
+role = "Project advising"
+start = 2012
