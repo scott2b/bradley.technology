@@ -36,3 +36,14 @@ external_links_target_blank = true
 
 [extra]
 # Put all your custom variables here
+
+[link_checker]
+# These publishers answer automated requests with 403 Forbidden, so the link
+# checker reports their DOIs as broken while they resolve fine in a browser.
+# Zola matches the link as written, which is the doi.org URL, so the skip is by
+# the publisher's DOI registrant prefix rather than its host. Links under these
+# prefixes are not checked at all.
+skip_prefixes = [
+    "https://doi.org/10.1093/", # Oxford University Press (academic.oup.com)
+    "https://doi.org/10.1145/", # ACM (dl.acm.org)
+]
