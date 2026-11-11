@@ -33,7 +33,6 @@ def tree(tmp_path, monkeypatch, price=0.14):
         (work / "log.jsonl").write_text(json.dumps({"model": MODEL, "images": 1, "cost": price}) + "\n")
     monkeypatch.setattr(images, "WORK", work)
     monkeypatch.setenv("OPENROUTER_API_KEY", "test")
-    monkeypatch.setattr(images, "load_env", lambda: None)
     calls = []
 
     def fake_call(model, prompt, refs=(), timeout=240):
@@ -157,3 +156,13 @@ def test_align_leaves_an_answer_that_already_fits():
     orig = scribble()
     moved, (sc, dx, dy, before, after) = images.align(orig, orig.copy(), [(480, 230, 640, 370)])
     assert (sc, dx, dy) == (1.0, 0, 0)
+
+
+def test_fix_exits_before_calling_when_the_key_is_not_in_the_environment(tmp_path, monkeypatch):
+    out, calls = tree(tmp_path, monkeypatch)
+    monkeypatch.delenv("OPENROUTER_API_KEY")
+    with pytest.raises(SystemExit) as e:
+        images.cmd_fix(args())
+    assert str(e.value) == "OPENROUTER_API_KEY is not set in the environment"
+    assert calls == []
+    assert sorted(p.name for p in out.glob("*.png")) == ["workshop-1.png"]
