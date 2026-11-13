@@ -49,7 +49,7 @@ beside the one it mends, which is never overwritten; promote it like any other.
 A fix can itself be mended; the model is always sent the first drawing's raw
 frame, and only the new boxes are taken from its answer.
 
-Marks and fix call OpenRouter (OPENROUTER_API_KEY in .env), one call per candidate
+Marks and fix call OpenRouter (OPENROUTER_API_KEY in the environment), one call per candidate
 or edit. Marks stops when the running cost reported by the API reaches --budget;
 fix refuses its one call when the model's last logged price is above --budget, or
 when the model has no logged price at all. Every call is logged with its cost to
@@ -96,13 +96,10 @@ Direction:
 
 
 # ------------------------------------------------------------------ helpers
-def load_env():
-    p = ROOT / ".env"
-    if p.exists():
-        for line in p.read_text().splitlines():
-            if "=" in line and not line.lstrip().startswith("#"):
-                k, v = line.split("=", 1)
-                os.environ.setdefault(k.strip(), v.strip())
+def require_key():
+    """Exit before any work when the OpenRouter key is missing from the environment."""
+    if not os.environ.get("OPENROUTER_API_KEY"):
+        sys.exit("OPENROUTER_API_KEY is not set in the environment")
 
 
 def briefs():
@@ -184,9 +181,7 @@ def model_tag(model):
 
 
 def cmd_marks(args):
-    load_env()
-    if "OPENROUTER_API_KEY" not in os.environ:
-        sys.exit("OPENROUTER_API_KEY is not set")
+    require_key()
     data = briefs()
     styles = list(data["styles"]) if args.all_styles else args.styles
     if not styles:
@@ -368,9 +363,7 @@ def uncrop(img, raw):
 
 
 def cmd_fix(args):
-    load_env()
-    if "OPENROUTER_API_KEY" not in os.environ:
-        sys.exit("OPENROUTER_API_KEY is not set")
+    require_key()
     out = WORK / args.slug
     src = out / f"{args.candidate}.png"
     if not src.exists():
